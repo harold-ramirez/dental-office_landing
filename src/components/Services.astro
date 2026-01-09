@@ -1,0 +1,33 @@
+---
+import { services } from "@lib/services.ts"
+---
+
+<section id="servicios" class="flex flex-col bg-blue-200 p-5 h-[90vh]">
+  <h2 class="mb-5 w-full font-semibold text-3xl text-center">Nuestros Servicios</h2>
+  <div class="flex-1 overflow-y-auto lg:gap-5 gap-2 grid grid-cols-4 lg:px-5 px-2">
+    {
+      services.map(service => (
+        <div class="group relative lg:col-span-1 col-span-4 lg:h-auto h-44 lg:rounded-xl rounded-md overflow-hidden select-none">
+          <img
+            loading="lazy"
+            alt={service.name}
+            src={service.photo}
+            class="absolute w-full h-full object-cover group-hover:scale-110 transition-all duration-500 will-change-transform"
+          />
+          <div class="absolute flex flex-col w-full h-[150%] transition-all translate-y-[30%] group-hover:translate-y-[-30%] duration-500 will-change-transform">
+            <div class="bg-linear-to-t from-black/70 to-transparent w-full h-1/2"/>
+            <div class="bg-black/70 w-full h-full"/>
+          </div>
+          <div class="absolute inset-0 flex flex-col justify-center items-center gap-2 px-2 text-center transition-all translate-y-[60%] group-hover:translate-y-0 duration-500 will-change-transform">
+            <p class="font-bold text-white text-2xl">
+              {service.name}
+            </p>
+            <p class="opacity-0 group-hover:opacity-100 mb-3 text-white transition-opacity duration-300 will-change-auto">
+              {service.description}
+            </p>
+          </div>
+        </div>
+      ))
+    }
+  </div>
+</section>

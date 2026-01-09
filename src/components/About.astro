@@ -1,0 +1,40 @@
+---
+import CheckIcon from "@icons/Check.astro";
+import BarsIcon from "@icons/Bars.astro";
+import GroupIcon from "@icons/Group.astro";
+---
+
+<section id="acerca" class="flex lg:flex-row flex-col justify-center overflow-hidden items-center gap-10 bg-sky-100 px-10 h-[90vh]">
+  <img
+    src="/profile.webp"
+    alt="Profile Picture"
+    loading="lazy"
+    class="bg-slate-100 shadow-xl rounded-full w-sm h-sm object-cover aspect-square"
+  />
+  <div class="flex flex-col justify-center bg-slate-100 overflow-hidden shadow p-10 rounded-xl lg:max-w-3/5">
+    <p class="mb-5 font-bold text-3xl">Dr. Alexander Ojalvo</p>
+    <p class="leading-relaxed">
+      Con años de experiencia en odontología especializada, el Dr. Alexander Ojalvo se ha dedicado a transformar sonrisas y mejorar la salud bucal de varios pacientes en Cochabamba.
+    </p>
+    <p class="leading-relaxed">
+      Su enfoque combina técnicas de vanguardia con un trato cálido y personalizado, asegurando que cada paciente reciba la atención que merece en un ambiente cómodo y profesional.
+    </p>
+    <p class="leading-relaxed">
+      Comprometido con la excelencia y la actualización constante, el Dr. Ojalvo ofrece soluciones integrales que van desde tratamientos preventivos hasta procedimientos estéticos avanzados, siempre priorizando tu bienestar y satisfacción.
+    </p>
+    <div class="flex flex-row justify-around mt-5">
+      <div class="flex flex-col justify-center items-center shadow-lg px-2 py-4 rounded-lg w-52">
+        <GroupIcon className="w-16 h-16 text-blue-600" />
+        <span class="text-center">Atención personalizada y humanizada</span>
+      </div>
+      <div class="flex flex-col justify-center items-center shadow-lg px-2 py-4 rounded-lg w-52">
+        <CheckIcon className="w-16 h-16 text-blue-600"/>
+        <span class="text-center">Tecnología de última generación</span>
+      </div>
+      <div class="flex flex-col justify-center items-center shadow-lg px-2 py-4 rounded-lg w-52">
+        <BarsIcon className="w-16 h-16 text-blue-600" />
+        <span class="text-center">Resultados comprobados y duraderos</span>
+      </div>
+    </div>
+  </div>
+</section>

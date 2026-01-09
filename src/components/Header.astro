@@ -1,0 +1,126 @@
+---
+import Close from "@icons/Close.astro";
+import Menu from "@icons/Menu.astro";
+import WhatsappIcon from "@icons/Whatsapp.astro";
+const phoneNumber = "72223681";
+const labels = [
+  {label: "Inicio", id:"#hero"},
+  {label: "Servicios", id:"#servicios"},
+  {label: "Acerca de", id:"#acerca"},
+  {label: "Reservar Cita", id:"#solicitarCita"},
+  {label: "Ubicación", id:"#ubicacion"},
+]
+---
+
+<header class="top-0 right-0 left-0 z-50 sticky flex flex-row items-center bg-linear-to-b from-blue-500 to-blue-600 p-5 h-[10dvh] overflow-hidden text-white">
+  <nav class="items-center grid grid-cols-4 w-full">
+    <!-- Logo -->
+    <ul class="flex col-span-1 font-bold">
+      <a href="#hero" class="flex flex-row items-center gap-1">
+        <img
+          loading="lazy"
+          src="/logo.webp"
+          alt="Dr. Alexander Ojalvo"
+          class="rounded-full size-15"
+        />
+        <p class="hidden lg:block">
+          Odontología Especializada
+          <br>
+          Dr. Alexander Ojalvo
+        </p>
+      </a>
+    </ul>
+
+    <!-- Menu Toggle -->
+    <label for="menuToggle" class="lg:hidden flex justify-end items-center col-span-2 cursor-pointer">
+      <input
+        type="checkbox"
+        id="menuToggle"
+        class="peer hidden"
+      />
+      <Menu className="peer-checked:hidden w-12 h-12 text-white menuIcon" />
+      <Close className="hidden peer-checked:block w-12 h-12 text-white closeIcon" />
+    </label>
+
+    <!-- Mobile Menu -->
+    <ul id="mobileMenu" class="lg:top-auto top-full right-0 left-0 absolute lg:relative flex lg:flex lg:flex-row flex-col justify-center items-center gap-5 col-span-4 lg:col-span-2 bg-linear-to-b from-blue-600 lg:from-transparent to-blue-500 lg:to-transparent pb-3 font-semibold text-lg">
+      {labels.map((item)=>(
+        <a
+          href={item.id} 
+          class="inline-block after:bottom-0 after:left-0 after:absolute relative after:bg-current px-1 py-1 after:w-full after:h-0.5 after:content-[''] after:scale-x-0 hover:after:scale-x-100 focus-visible:after:scale-x-100 after:origin-(--u-o) after:transition-transform after:duration-300 [--u-o:right] hover:[--u-o:left] focus-visible:[--u-o:left]"
+        >
+          {item.label}
+        </a>
+      ))}
+    </ul>
+
+    <!-- Menu -->
+    <!-- <ul class="top-full lg:top-auto right-0 left-0 absolute lg:relative flex lg:flex-row flex-col justify-center items-center gap-5 col-span-4 lg:col-span-2 bg-linear-to-b from-blue-600 lg:from-transparent to-blue-500 lg:to-transparent pb-3 font-semibold text-lg">
+      {labels.map((item)=>(
+        <a
+          href={item.id} 
+          class="after:scale-x-0 relative inline-block px-1 py-1 [--u-o:right] hover:[--u-o:left] focus-visible:[--u-o:left] after:content after:absolute after:left-0 after:bottom-0 after:h-0.5 after:w-full after:bg-current hover:after:scale-x-100 focus-visible:after:scale-x-100 after:origin-(--u-o) after:transition-transform after:duration-300"
+        >
+          {item.label}
+        </a>
+      ))}
+    </ul> -->
+
+    <!-- Whatsapp Button -->
+    <ul class="flex justify-end items-center gap-2 col-span-1">
+      <a
+        target="_blank"
+        title="Hablar por WhatsApp"
+        href=`https://wa.me/591${phoneNumber}`
+      >
+        <WhatsappIcon className="hover:bg-white rounded-md w-10 h-10 hover:text-green-500 duration-500" />
+      </a>
+    </ul>
+  </nav>
+</header>
+
+<script>
+  // Section Scroll
+  document.querySelector('header nav ul:nth-child(2) a:nth-child(1)')
+    ?.classList.add("after:scale-x-100");
+  let sections = document.querySelectorAll('section');
+  let navLinks = document.querySelectorAll('header nav ul:nth-child(2) a');
+
+  window.onscroll = () => {
+    sections.forEach(sec => {
+      let top = window.scrollY;
+      let offset = sec.offsetTop - 150;
+      let height = sec.offsetHeight;
+      let id = sec.getAttribute('id');
+      if(top >= offset && top < offset + height) {
+        navLinks.forEach(links => {
+          links.classList.remove(...["after:scale-x-100", "[--u-o:left]"]);
+          links.classList.add("[--u-o:right]");
+          document.querySelector('header nav ul:nth-child(2) a[href*=' + id + ']')
+            ?.classList.remove("[--u-o:right]");
+          document.querySelector('header nav ul:nth-child(2) a[href*=' + id + ']')
+            ?.classList.add(...["[--u-o:left]", "after:scale-x-100"]);
+        });
+      };
+    });
+  };
+
+  // Toggle menu móvil
+  const menuToggle = document.getElementById('menuToggle') as HTMLInputElement;
+  const mobileMenu = document.getElementById('mobileMenu');
+  const header = document.querySelector('header');
+
+  menuToggle?.addEventListener('change', (e) => {
+    const isChecked = (e.target as HTMLInputElement).checked;
+    
+    if (isChecked) {
+      header?.classList.remove('overflow-hidden');
+      header?.classList.add('overflow-visible');
+      mobileMenu?.classList.remove('hidden');
+    } else {
+      header?.classList.add('overflow-hidden');
+      header?.classList.remove('overflow-visible');
+      mobileMenu?.classList.add('hidden');
+    }
+  });
+</script>

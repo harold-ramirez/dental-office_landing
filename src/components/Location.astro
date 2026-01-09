@@ -1,0 +1,60 @@
+---
+import GoToArrowIcon from "@icons/GoToArrow.astro";
+import MapPinIcon from "@icons/MapPin.astro";
+import {
+  Leaflet,
+  Marker,
+  Popup,
+} from "astro-leaflet";
+---
+
+<section id="ubicacion" class="flex lg:flex-row flex-col justify-center items-center h-[90vh]">
+  <div class="flex flex-col justify-center items-center lg:w-1/2 w-full lg:h-full h-1/2">
+    <span class="flex flex-col items-center gap-5 w-2/3">
+      <h3 class="w-full font-bold text-2xl">Encuéntranos</h3>
+      <p>Estamos ubicados al lado de la plazuela de Capacachi y la Capilla Virgen del Carmen</p>
+      <span class="group relative flex flex-row items-center gap-1 bg-gray-200 hover:bg-transparent px-3 py-1.5 border-2 border-transparent hover:border-blue-400 rounded-lg duration-500">
+        <MapPinIcon className="w-10 h-10 text-blue-400" />
+        <a
+          target="_blank"
+          href="https://www.google.com/maps/search/?api=1&query=-17.38332961564672,-66.22185454484892"
+        >
+          <b class="text-lg">Dirección</b>
+          <p class="text-sm">Av. 16 de Julio y D'orbigny, Zona Capacachi <br/> Colcapirhua - Cochabamba</p>
+        </a>
+        <GoToArrowIcon className="top-1 group-hover:top-2 right-1 group-hover:right-2 absolute w-5 h-5 text-blue-400 group-hover:scale-150 transition-all duration-300" />
+      </span>
+    </span>
+  </div>
+
+  <div class="z-10 lg:p-5 p-2 lg:w-1/2 w-full lg:h-full h-1/2">
+    <Leaflet
+      id="map-quick-start"
+      style={{ height: "100%" }}
+      options={{ center: [-17.383369, -66.2218407], zoom: 16 }}
+    >
+      <Marker latlng={[-17.383369, -66.2218407]}>
+        <Popup content="Odontología especializada <br/> Dr. Alexander Ojalvo" open />
+      </Marker>
+    </Leaflet> 
+  </div>
+</section>
+
+<script>
+  import { getMapFromId } from "astro-leaflet"
+  import L from 'leaflet'
+
+  window.addEventListener('load', () => {
+    const map = getMapFromId('map-quick-start')
+    if (map) {
+      var popup = L.popup();
+      function onMapClick(e: any) {
+        popup
+        .setLatLng(e.latlng)
+        .setContent("You clicked the map at " + e.latlng.toString())
+        .openOn(map!);
+      }
+      map.on('click', onMapClick);
+    }
+  })
+</script>

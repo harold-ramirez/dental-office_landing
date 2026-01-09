@@ -1,0 +1,41 @@
+---
+import MapPinIcon from "@icons/MapPin.astro";
+import PhoneIcon from "@icons/Phone.astro"
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="flex flex-col justify-center items-center gap-4 bg-gray-100 px-4 py-4">
+  <div class="flex lg:flex-row flex-col items-start gap-5 px-4 w-full text-gray-500">
+    <div class="flex justify-center items-center w-full lg:w-1/3 lg:text-left text-center">
+      <span>
+        <b class="text-black">Odontología especializada Dr. Alexander Ojalvo</b>
+        <p class="text-sm">Tu sonrisa es nuestra prioridad. Cuidado dental expoerto con un toque humano.</p>
+      </span>
+    </div>
+    <div class="flex justify-center items-center w-full lg:w-1/3 lg:text-left text-center">
+      <span class="flex flex-col items-center lg:items-start">
+        <b class="text-black">Contacto</b>
+        <p class="flex text-sm">
+          <PhoneIcon className="w-6 h-6 text-gray-500" />
+          +591 72223681
+        </p>
+        <p class="flex text-sm">
+          <MapPinIcon className="w-6 h-6"/>
+          Av. 16 de Julio y D'orbigny, Zona Capacachi <br/> Colcapirhua - Cochabamba
+        </p>
+      </span>
+    </div>
+    <div class="flex justify-center items-center w-full lg:w-1/3 lg:text-left text-center">
+      <span>
+        <b class="text-black">Horario General</b>
+        <p class="text-sm">Lunes - Viernes: 08:00 - 16:00 hrs.</p>
+      </span>
+    </div>
+  </div>
+  <div class="pt-4 border-gray-400 border-t w-full text-gray-600 text-center">
+    &copy; {currentYear} Odontología Especializada Dr. Alexander Ojalvo. Todos los derechos reservados.
+    <div class="mt-2 text-gray-500 text-sm">
+      Imágenes utilizadas de <a href="https://www.freepik.com" target="_blank" class="hover:underline">Freepik.com</a>
+    </div>
+  </div>
+</footer>
