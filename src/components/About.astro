@@ -4,36 +4,49 @@ import BarsIcon from "@icons/Bars.astro";
 import GroupIcon from "@icons/Group.astro";
 ---
 
-<section id="acerca" class="flex lg:flex-row flex-col justify-center overflow-hidden items-center gap-10 bg-sky-100 px-10 h-[90vh]">
-  <img
-    src="/profile.webp"
-    alt="Profile Picture"
-    loading="lazy"
-    class="bg-slate-100 shadow-xl rounded-full w-sm h-sm object-cover aspect-square"
-  />
-  <div class="flex flex-col justify-center bg-slate-100 overflow-hidden shadow p-10 rounded-xl lg:max-w-3/5">
-    <p class="mb-5 font-bold text-3xl">Dr. Alexander Ojalvo</p>
-    <p class="leading-relaxed">
-      Con años de experiencia en odontología especializada, el Dr. Alexander Ojalvo se ha dedicado a transformar sonrisas y mejorar la salud bucal de varios pacientes en Cochabamba.
-    </p>
-    <p class="leading-relaxed">
-      Su enfoque combina técnicas de vanguardia con un trato cálido y personalizado, asegurando que cada paciente reciba la atención que merece en un ambiente cómodo y profesional.
-    </p>
-    <p class="leading-relaxed">
-      Comprometido con la excelencia y la actualización constante, el Dr. Ojalvo ofrece soluciones integrales que van desde tratamientos preventivos hasta procedimientos estéticos avanzados, siempre priorizando tu bienestar y satisfacción.
-    </p>
-    <div class="flex flex-row justify-around mt-5">
-      <div class="flex flex-col justify-center items-center shadow-lg px-2 py-4 rounded-lg w-52">
-        <GroupIcon className="w-16 h-16 text-blue-600" />
-        <span class="text-center">Atención personalizada y humanizada</span>
+<section id="acerca" class="flex lg:flex-row flex-col justify-center items-center gap-12 bg-linear-to-br from-blue-50 via-white to-blue-50 px-4 py-16 lg:py-20">
+  <div class="flex flex-col items-center lg:items-start flex-1">
+    <div class="relative">
+      <div class="absolute inset-0 bg-blue-600 rounded-2xl transform rotate-3 opacity-20"></div>
+      <img
+        src="/profile.webp"
+        alt="Dr. Alexander Ojalvo - Especialista en Odontología"
+        loading="lazy"
+        class="relative rounded-2xl shadow-2xl w-80 h-80 object-cover border-4 border-white"
+      />
+    </div>
+  </div>
+  
+  <div class="flex flex-col flex-1 gap-6">
+    <div>
+      <h2 class="mb-2 font-bold text-4xl text-gray-900">Dr. Alexander Ojalvo</h2>
+      <p class="text-blue-600 font-semibold text-lg">Pasión y Vanguardia en Odontología</p>
+    </div>
+    
+    <div class="space-y-4 text-gray-700 leading-relaxed text-justify">
+      <p>
+        El Dr. Alexander Ojalvo representa la nueva generación de odontólogos, combinando una sólida formación académica con las técnicas más innovadoras del sector.
+      </p>
+      <p>
+        Su enfoque fresco y dinámico se refleja en una actualización constante, asegurando que cada paciente se beneficie de los últimos avances en tecnología dental. 
+      </p>
+      <p>
+        Dedicado a la excelencia, el Dr. Ojalvo crea un ambiente de confianza donde la salud bucal y la estética se unen para transformar sonrisas con precisión y calidez humana.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 pt-4">
+      <div class="flex flex-col items-center p-6 bg-white/50 backdrop-blur-sm border border-blue-100 rounded-xl shadow-sm hover:shadow-md transition-all duration-300">
+        <GroupIcon className="w-10 h-10 text-blue-600 mb-3" />
+        <span class="text-center font-semibold text-gray-900 text-sm">Trato Humano y Cercano</span>
       </div>
-      <div class="flex flex-col justify-center items-center shadow-lg px-2 py-4 rounded-lg w-52">
-        <CheckIcon className="w-16 h-16 text-blue-600"/>
-        <span class="text-center">Tecnología de última generación</span>
+      <div class="flex flex-col items-center p-6 bg-white/50 backdrop-blur-sm border border-blue-100 rounded-xl shadow-sm hover:shadow-md transition-all duration-300">
+        <CheckIcon className="w-10 h-10 text-blue-600 mb-3"/>
+        <span class="text-center font-semibold text-gray-900 text-sm">Técnicas Modernas</span>
       </div>
-      <div class="flex flex-col justify-center items-center shadow-lg px-2 py-4 rounded-lg w-52">
-        <BarsIcon className="w-16 h-16 text-blue-600" />
-        <span class="text-center">Resultados comprobados y duraderos</span>
+      <div class="flex flex-col items-center p-6 bg-white/50 backdrop-blur-sm border border-blue-100 rounded-xl shadow-sm hover:shadow-md transition-all duration-300">
+        <BarsIcon className="w-10 h-10 text-blue-600 mb-3" />
+        <span class="text-center font-semibold text-gray-900 text-sm">Compromiso con tu Salud</span>
       </div>
     </div>
   </div>

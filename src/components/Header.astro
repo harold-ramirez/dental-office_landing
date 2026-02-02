@@ -2,89 +2,147 @@
 import Close from "@icons/Close.astro";
 import Menu from "@icons/Menu.astro";
 import WhatsappIcon from "@icons/Whatsapp.astro";
-const phoneNumber = "72223681";
+
+let phoneNumber = "72223681";
+
+try {
+  const apiUrl = import.meta.env.PUBLIC_API_URL;
+  if(apiUrl) {
+    const response = await fetch(`${apiUrl}/appointment-requests/doctor-phoneNumber`);
+    if(response.ok) {
+        const text = await response.text();
+        if(text) phoneNumber = text;
+    }
+  }
+} catch (error) {
+  console.error("Failed to fetch phone number", error);
+}
+
 const labels = [
-  {label: "Inicio", id:"#hero"},
+  {label: "Inicio", id:"#inicio"},
   {label: "Servicios", id:"#servicios"},
   {label: "Acerca de", id:"#acerca"},
-  {label: "Reservar Cita", id:"#solicitarCita"},
+  // {label: "Testimonios", id:"#testimonios"},
   {label: "Ubicación", id:"#ubicacion"},
 ]
 ---
 
-<header class="top-0 right-0 left-0 z-50 sticky flex flex-row items-center bg-linear-to-b from-blue-500 to-blue-600 p-5 h-[10dvh] overflow-hidden text-white">
-  <nav class="items-center grid grid-cols-4 w-full">
+<header class="top-0 right-0 left-0 z-50 sticky px-4 lg:px-8 bg-linear-to-r from-blue-600 to-blue-700 shadow-lg py-3 h-auto text-white">
+  <input type="checkbox" id="menuToggle" class="peer hidden" />
+  
+  <nav class="flex items-center justify-between w-full max-w-7xl mx-auto">
     <!-- Logo -->
-    <ul class="flex col-span-1 font-bold">
-      <a href="#hero" class="flex flex-row items-center gap-1">
-        <img
-          loading="lazy"
-          src="/logo.webp"
-          alt="Dr. Alexander Ojalvo"
-          class="rounded-full size-15"
-        />
-        <p class="hidden lg:block">
-          Odontología Especializada
-          <br>
-          Dr. Alexander Ojalvo
-        </p>
-      </a>
-    </ul>
+    <a href="#inicio" class="flex flex-row items-center gap-2 hover:opacity-80 transition-opacity">
+      <img
+        loading="lazy"
+        src="/logo.webp"
+        alt="Dr. Alexander Ojalvo - Odontología Especializada"
+        class="rounded-full size-14 border-2 border-white shadow-md"
+      />
+      <p class="hidden lg:block text-base font-bold leading-tight">
+        Odontología<br>Dr. Ojalvo
+      </p>
+    </a>
 
     <!-- Menu Toggle -->
-    <label for="menuToggle" class="lg:hidden flex justify-end items-center col-span-2 cursor-pointer">
-      <input
-        type="checkbox"
-        id="menuToggle"
-        class="peer hidden"
-      />
-      <Menu className="peer-checked:hidden w-12 h-12 text-white menuIcon" />
-      <Close className="hidden peer-checked:block w-12 h-12 text-white closeIcon" />
+    <label for="menuToggle" class="lg:hidden flex justify-end cursor-pointer z-50">
+      <Menu className="peer-checked:hidden w-8 h-8 text-white block" />
+      <span class="hidden peer-checked:block">
+          <Close className="w-8 h-8 text-white" />
+      </span>
     </label>
 
-    <!-- Mobile Menu -->
-    <ul id="mobileMenu" class="lg:top-auto top-full right-0 left-0 absolute lg:relative flex lg:flex lg:flex-row flex-col justify-center items-center gap-5 col-span-4 lg:col-span-2 bg-linear-to-b from-blue-600 lg:from-transparent to-blue-500 lg:to-transparent pb-3 font-semibold text-lg">
+    <!-- Navigation Menu Desktop -->
+    <ul class="hidden lg:flex items-center justify-center gap-8">
       {labels.map((item)=>(
         <a
           href={item.id} 
-          class="inline-block after:bottom-0 after:left-0 after:absolute relative after:bg-current px-1 py-1 after:w-full after:h-0.5 after:content-[''] after:scale-x-0 hover:after:scale-x-100 focus-visible:after:scale-x-100 after:origin-(--u-o) after:transition-transform after:duration-300 [--u-o:right] hover:[--u-o:left] focus-visible:[--u-o:left]"
+          class="text-base font-medium hover:text-blue-100 transition-colors relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:bg-blue-200 after:w-0 hover:after:w-full after:transition-all after:duration-300"
         >
           {item.label}
         </a>
       ))}
     </ul>
-
-    <!-- Menu -->
-    <!-- <ul class="top-full lg:top-auto right-0 left-0 absolute lg:relative flex lg:flex-row flex-col justify-center items-center gap-5 col-span-4 lg:col-span-2 bg-linear-to-b from-blue-600 lg:from-transparent to-blue-500 lg:to-transparent pb-3 font-semibold text-lg">
-      {labels.map((item)=>(
-        <a
-          href={item.id} 
-          class="after:scale-x-0 relative inline-block px-1 py-1 [--u-o:right] hover:[--u-o:left] focus-visible:[--u-o:left] after:content after:absolute after:left-0 after:bottom-0 after:h-0.5 after:w-full after:bg-current hover:after:scale-x-100 focus-visible:after:scale-x-100 after:origin-(--u-o) after:transition-transform after:duration-300"
-        >
-          {item.label}
-        </a>
-      ))}
-    </ul> -->
 
     <!-- Whatsapp Button -->
-    <ul class="flex justify-end items-center gap-2 col-span-1">
-      <a
-        target="_blank"
-        title="Hablar por WhatsApp"
-        href=`https://wa.me/591${phoneNumber}`
-      >
-        <WhatsappIcon className="hover:bg-white rounded-md w-10 h-10 hover:text-green-500 duration-500" />
-      </a>
-    </ul>
+    <a
+      target="_blank"
+      rel="noopener noreferrer"
+      title="Contactar por WhatsApp"
+      href={`https://wa.me/591${phoneNumber}`}
+      class="flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white font-semibold px-4 py-2 rounded-lg transition-all duration-300 shadow-lg hover:shadow-xl text-base"
+    >
+      <WhatsappIcon className="w-5 h-5" />
+      <span class="hidden sm:inline">WhatsApp</span>
+    </a>
   </nav>
+
+  <!-- Mobile Menu -->
+  <ul class="hidden peer-checked:flex absolute top-full left-0 right-0 flex-col bg-blue-700 shadow-lg animate-fade-in-down origin-top transition-all duration-300">
+    {labels.map((item)=>(
+      <a
+        href={item.id} 
+        class="mobile-link px-4 py-4 text-center font-medium hover:bg-blue-600 transition-colors border-b border-blue-600 last:border-b-0 text-lg"
+      >
+        {item.label}
+      </a>
+    ))}
+  </ul>
 </header>
 
+<style>
+  /* Fix animation peer */
+  input#menuToggle:checked ~ ul {
+    display: flex;
+  }
+  
+  /* Toggle Icon Logic handled by label sibling check? No, label doesn't see input state directly if input is outside. 
+     Wait, I moved input outside. The Label is inside Nav. 
+     The label 'for' attribute triggers the input. 
+     But the icons inside the label depends on peer-checked state. 
+     The input (peer) is previous sibling of nav. 
+     Nav contains label. 
+     The icons inside label cannot see the input via pure CSS peer selector comfortably without :has() support or structure change.
+     
+     EASIER: Use the script to toggle icons or put input back inside label but use :has() or JS.
+     Actually, let's use the script to handle the close/menu icon swap or just simple JS toggling class.
+     OR: Put input inside the label again, and use the script to toggle the menu visibility class.
+     
+     Actually, I will use a simple script for mobile menu to be 100% reliable.
+  */
+</style>
+
 <script>
-  // Section Scroll
-  document.querySelector('header nav ul:nth-child(2) a:nth-child(1)')
-    ?.classList.add("after:scale-x-100");
+  // Mobile Menu Logic
+  const menuToggle = document.getElementById('menuToggle') as HTMLInputElement;
+  const mobileMenu = document.querySelector('header > ul'); // Select the UL that is direct child
+  const menuIcons = document.querySelectorAll('label[for="menuToggle"] > svg, label[for="menuToggle"] > span');
+  const mobileLinks = document.querySelectorAll('.mobile-link');
+
+  // Sync icons
+  const updateIcons = () => {
+     if(menuToggle.checked) {
+        menuIcons[0].classList.add('hidden'); // Menu Icon
+        menuIcons[1].classList.remove('hidden'); // Close Icon
+     } else {
+        menuIcons[0].classList.remove('hidden');
+        menuIcons[1].classList.add('hidden');
+     }
+  };
+
+  menuToggle?.addEventListener('change', updateIcons);
+  
+  // Close menu when clicking link
+  mobileLinks.forEach(link => {
+    link.addEventListener('click', () => {
+      menuToggle.checked = false;
+      updateIcons();
+    });
+  });
+
+  // Scroll Spy Logic
   let sections = document.querySelectorAll('section');
-  let navLinks = document.querySelectorAll('header nav ul:nth-child(2) a');
+  let navLinks = document.querySelectorAll('header nav ul:nth-child(2) a'); // Desktop links
 
   window.onscroll = () => {
     sections.forEach(sec => {
@@ -92,35 +150,16 @@ const labels = [
       let offset = sec.offsetTop - 150;
       let height = sec.offsetHeight;
       let id = sec.getAttribute('id');
+      
       if(top >= offset && top < offset + height) {
         navLinks.forEach(links => {
-          links.classList.remove(...["after:scale-x-100", "[--u-o:left]"]);
-          links.classList.add("[--u-o:right]");
+          // Remove active styles
+          links.classList.remove("after:w-full");
+          // Add active style to current
           document.querySelector('header nav ul:nth-child(2) a[href*=' + id + ']')
-            ?.classList.remove("[--u-o:right]");
-          document.querySelector('header nav ul:nth-child(2) a[href*=' + id + ']')
-            ?.classList.add(...["[--u-o:left]", "after:scale-x-100"]);
+            ?.classList.add("after:w-full");
         });
       };
     });
   };
-
-  // Toggle menu móvil
-  const menuToggle = document.getElementById('menuToggle') as HTMLInputElement;
-  const mobileMenu = document.getElementById('mobileMenu');
-  const header = document.querySelector('header');
-
-  menuToggle?.addEventListener('change', (e) => {
-    const isChecked = (e.target as HTMLInputElement).checked;
-    
-    if (isChecked) {
-      header?.classList.remove('overflow-hidden');
-      header?.classList.add('overflow-visible');
-      mobileMenu?.classList.remove('hidden');
-    } else {
-      header?.classList.add('overflow-hidden');
-      header?.classList.remove('overflow-visible');
-      mobileMenu?.classList.add('hidden');
-    }
-  });
 </script>

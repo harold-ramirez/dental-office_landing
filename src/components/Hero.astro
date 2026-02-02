@@ -1,23 +1,52 @@
-<section id="hero" class="relative justify-center bg-[url('/dentalOfficeBG.webp')] bg-cover bg-no-repeat bg-center min-h-[90vh]">
-  <div class="top-0 left-0 absolute flex flex-col justify-center gap-4 bg-linear-to-r from-black/75 to-transparent p-8 w-full h-full text-slate-200">
-    <h1 class="lg:w-1/2 w-2/3 font-bold lg:text-5xl text-3xl">
-      Tu sonrisa perfecta, diseñada por expertos
+<section id="inicio" class="relative justify-center bg-[url('/dentalOfficeBG.webp')] bg-cover bg-no-repeat bg-center min-h-[90vh]">
+  <div class="top-0 left-0 absolute flex flex-col justify-center gap-6 bg-linear-to-r from-blue-950/85 via-blue-950/75 to-transparent p-8 w-full h-full text-white">
+    <h1 class="lg:w-1/2 w-full font-bold lg:text-6xl text-4xl leading-tight">
+      Tu sonrisa perfecta, <span class="text-transparent bg-clip-text bg-linear-to-r from-blue-300 to-blue-100">diseñada por expertos</span>
     </h1>
-    <h2 class="lg:w-1/2 w-2/3 lg:text-xl">
-      Ofrecemos cuidado dental de vanguardia en un ambiente moderno y confortable. Confía en nosotros para lograr la salud bucal que mereces
-    </h2>
+    <p class="lg:w-1/2 w-full lg:text-lg text-base leading-relaxed text-slate-100">
+      Ofrecemos cuidado dental de vanguardia en un ambiente moderno y confortable. Confía en nosotros para lograr la salud bucal que mereces.
+    </p>
     
-    <a
-      href="#solicitarCita"
-      class="group relative self-start bg-gray-100 shadow-inner px-8 py-2 border border-gray-100 rounded-lg overflow-hidden font-medium text-gray-600"
-    >
-      <span class="top-0 left-0 absolute border-gray-600 border-t-4 w-0 group-hover:w-full h-0 transition-all duration-300 ease"></span>
-      <span class="right-0 bottom-0 absolute border-gray-600 border-b-4 w-0 group-hover:w-full h-0 transition-all duration-300 ease"></span>
-      <span class="top-0 left-0 absolute bg-gray-600 w-full h-0 group-hover:h-full transition-all duration-400 delay-200 ease"></span>
-      <span class="bottom-0 left-0 absolute bg-gray-600 w-full h-0 group-hover:h-full transition-all duration-400 delay-200 ease"></span>
-      <span class="absolute inset-0 bg-gray-900 opacity-0 group-hover:opacity-100 w-full h-full duration-400 delay-300"></span>
-      <span class="relative group-hover:text-white transition-colors duration-400 delay-200 ease">Reservar Cita</span>
-    </a>
+    <div class="flex flex-col lg:flex-row gap-4 mt-4">
+      <a
+        href="#solicitarCita"
+        class="group relative inline-block bg-blue-500 hover:bg-blue-600 text-white font-bold px-8 py-3 rounded-lg transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-1"
+      >
+        <span class="relative flex items-center gap-2">
+          Reservar Cita Ahora
+          <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+          </svg>
+        </span>
+      </a>
+      
+      <a
+        href="#servicios"
+        class="group relative inline-block border-2 border-white text-white hover:bg-white hover:text-blue-950 font-bold px-8 py-3 rounded-lg transition-all duration-300"
+      >
+        <span class="relative">Ver Servicios</span>
+      </a>
+    </div>
 
+    <div class="flex flex-wrap gap-6 mt-8 lg:w-1/2">
+      <div class="flex items-center gap-2">
+        <svg class="w-6 h-6 text-blue-300" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+        </svg>
+        <span class="text-sm">Tecnología de última generación</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <svg class="w-6 h-6 text-blue-300" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+        </svg>
+        <span class="text-sm">Atención personalizada</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <svg class="w-6 h-6 text-blue-300" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+        </svg>
+        <span class="text-sm">20+ años de experiencia</span>
+      </div>
+    </div>
   </div>
 </section>

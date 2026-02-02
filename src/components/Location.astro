@@ -1,36 +1,75 @@
 ---
 import GoToArrowIcon from "@icons/GoToArrow.astro";
 import MapPinIcon from "@icons/MapPin.astro";
+import PhoneIcon from "@icons/Phone.astro";
 import {
   Leaflet,
   Marker,
   Popup,
 } from "astro-leaflet";
+
+let phoneNumber = "72223681";
+
+try {
+  const apiUrl = import.meta.env.PUBLIC_API_URL;
+  if(apiUrl) {
+    const response = await fetch(`${apiUrl}/appointment-requests/doctor-phoneNumber`);
+    if(response.ok) {
+        const text = await response.text();
+        if(text) phoneNumber = text;
+    }
+  }
+} catch (error) {
+  console.error("Failed to fetch phone number", error);
+}
 ---
 
-<section id="ubicacion" class="flex lg:flex-row flex-col justify-center items-center h-[90vh]">
-  <div class="flex flex-col justify-center items-center lg:w-1/2 w-full lg:h-full h-1/2">
-    <span class="flex flex-col items-center gap-5 w-2/3">
-      <h3 class="w-full font-bold text-2xl">Encuéntranos</h3>
-      <p>Estamos ubicados al lado de la plazuela de Capacachi y la Capilla Virgen del Carmen</p>
-      <span class="group relative flex flex-row items-center gap-1 bg-gray-200 hover:bg-transparent px-3 py-1.5 border-2 border-transparent hover:border-blue-400 rounded-lg duration-500">
-        <MapPinIcon className="w-10 h-10 text-blue-400" />
+<section id="ubicacion" class="flex lg:flex-row flex-col justify-center items-center h-[90vh] bg-linear-to-b from-gray-50 to-white">
+  <div class="flex flex-col justify-center items-center lg:w-1/2 w-full lg:h-full h-1/2 p-4 lg:p-0">
+    <span class="flex flex-col items-center gap-6 w-full lg:w-2/3 text-center lg:text-left">
+      <div>
+        <h3 class="w-full font-bold text-3xl mb-2 text-gray-900">Encuéntranos</h3>
+         <p class="text-gray-600">Estamos ubicados al lado de la plazuela de Capacachi y la Capilla Virgen del Carmen</p>
+      </div>
+     
+      <div class="group relative flex flex-row items-center gap-3 bg-white hover:bg-white/80 px-5 py-4 border border-gray-200 hover:border-blue-400 rounded-xl shadow-sm hover:shadow-md transition-all duration-300 w-full max-w-sm">
+        <div class="bg-blue-50 p-2 rounded-full">
+           <MapPinIcon className="w-8 h-8 text-blue-500" />
+        </div>
         <a
           target="_blank"
           href="https://www.google.com/maps/search/?api=1&query=-17.38332961564672,-66.22185454484892"
+          class="flex-1"
         >
-          <b class="text-lg">Dirección</b>
-          <p class="text-sm">Av. 16 de Julio y D'orbigny, Zona Capacachi <br/> Colcapirhua - Cochabamba</p>
+          <b class="text-lg block text-gray-800">Dirección</b>
+          <p class="text-sm text-gray-500">Av. 16 de Julio y D'orbigny, Zona Capacachi <br/> Colcapirhua - Cochabamba</p>
         </a>
-        <GoToArrowIcon className="top-1 group-hover:top-2 right-1 group-hover:right-2 absolute w-5 h-5 text-blue-400 group-hover:scale-150 transition-all duration-300" />
-      </span>
+        <GoToArrowIcon className="top-2 group-hover:top-3 right-2 group-hover:right-3 absolute w-5 h-5 text-blue-400 opacity-0 group-hover:opacity-100 transition-all duration-300" />
+      </div>
+
+      <div class="flex flex-row gap-4 w-full max-w-sm">
+        <a href={`https://wa.me/591${phoneNumber}`} target="_blank" class="flex-1 flex flex-col items-center justify-center p-4 bg-white border border-gray-100 rounded-xl shadow-sm hover:shadow-md hover:border-green-400 transition-all group/phone">
+          <PhoneIcon className="w-6 h-6 text-green-500 mb-2 group-hover/phone:scale-110 transition-transform" />
+          <span class="font-bold text-gray-800">Contáctanos</span>
+          <span class="text-sm text-gray-500">+591 {phoneNumber}</span>
+        </a>
+        
+        <div class="flex-1 flex flex-col items-center justify-center p-4 bg-white border border-gray-100 rounded-xl shadow-sm">
+           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-blue-500 mb-2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          <span class="font-bold text-gray-800">Horarios</span>
+          <span class="text-sm text-gray-500">Lun-Vie: 8:00-16:00</span>
+        </div>
+      </div>
+
     </span>
   </div>
 
-  <div class="z-10 lg:p-5 p-2 lg:w-1/2 w-full lg:h-full h-1/2">
+  <div class="z-10 lg:p-5 p-0 lg:w-1/2 w-full lg:h-full h-1/2 shadow-inner lg:shadow-none">
     <Leaflet
       id="map-quick-start"
-      style={{ height: "100%" }}
+      style={{ height: "100%", width: "100%" }}
       options={{ center: [-17.383369, -66.2218407], zoom: 16 }}
     >
       <Marker latlng={[-17.383369, -66.2218407]}>

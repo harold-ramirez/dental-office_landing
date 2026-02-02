@@ -3,6 +3,21 @@ import Footer from '@components/Footer.astro'
 import Header from '@components/Header.astro'
 import '@styles/global.css'
 
+let phoneNumber = "72223681";
+
+try {
+  const apiUrl = import.meta.env.PUBLIC_API_URL;
+  if(apiUrl) {
+    const response = await fetch(`${apiUrl}/appointment-requests/doctor-phoneNumber`);
+    if(response.ok) {
+        const text = await response.text();
+        if(text) phoneNumber = text;
+    }
+  }
+} catch (error) {
+  console.error("Failed to fetch phone number", error);
+}
+
 interface Props {
   title: string
 }
@@ -13,11 +28,75 @@ const { title } = Astro.props
 	<head>
 		<meta charset="utf-8" />
 		<title>{title}</title>
-		<meta name="viewport" content="width=device-width" />
-    <meta property="og:title" content={title} />
-    <!-- Llenar -->
-    <meta name="description" content=""/>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="description" content="Odontología especializada en Cochabamba. Servicios dentales de vanguardia: implantes, ortodoncia, diseño de sonrisa. Dr. Alexander Ojalvo - tu salud bucal es nuestra prioridad." />
+		<meta name="keywords" content="odontología Cochabamba, dentista especializado, implantes dentales, ortodoncia, diseño de sonrisa, blanqueamiento dental" />
+		<meta name="author" content="Dr. Alexander Ojalvo" />
+		<meta name="robots" content="index, follow" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		
+		<!-- Open Graph / Facebook -->
+		<meta property="og:type" content="website" />
+		<meta property="og:url" content="https://dralejanderoojalvo.com/" />
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content="Odontología especializada en Cochabamba. Servicios dentales de vanguardia con Dr. Alexander Ojalvo." />
+		<meta property="og:image" content="/og-image.webp" />
+		<meta property="og:locale" content="es_ES" />
+		
+		<!-- Twitter -->
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:title" content={title} />
+		<meta name="twitter:description" content="Odontología especializada en Cochabamba. Servicios dentales de vanguardia con Dr. Alexander Ojalvo." />
+		<meta name="twitter:image" content="/og-image.webp" />
+		
+		<!-- Local Business Schema -->
+		<script type="application/ld+json">
+		{
+			"@context": "https://schema.org",
+			"@type": "LocalBusiness",
+			"name": "Odontología Especializada Dr. Alexander Ojalvo",
+			"image": "/logo.webp",
+			"description": "Servicio de odontología especializada con técnicas de vanguardia",
+			"address": {
+				"@type": "PostalAddress",
+				"streetAddress": "Av. 16 de Julio y D'orbigny, Zona Capacachi",
+				"addressLocality": "Cochabamba",
+				"addressRegion": "Cochabamba",
+				"postalCode": "",
+				"addressCountry": "BO"
+			},
+			"telephone": "+591 {phoneNumber}",
+			"priceRange": "$$$",
+			"areaServed": "Cochabamba",
+			"serviceType": "Dental Care",
+			"openingHoursSpecification": {
+				"@type": "OpeningHoursSpecification",
+				"dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+				"opens": "08:00",
+				"closes": "16:00"
+			},
+			"sameAs": [
+				"https://www.facebook.com/dralejanderoojalvo"
+			]
+		}
+		</script>
+		
+		<!-- Dentist Professional Schema -->
+		<script type="application/ld+json">
+		{
+			"@context": "https://schema.org",
+			"@type": "Dentist",
+			"name": "Dr. Alexander Ojalvo",
+			"image": "/profile.webp",
+			"description": "Especialista en odontología con años de experiencia",
+			"knowsAbout": ["General Dentistry", "Dental Implants", "Orthodontics", "Cosmetic Dentistry", "Endodontics"],
+			"url": "https://dralejanderoojalvo.com/",
+			"telephone": "+591 72223681"
+		}
+		</script>
+		
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="canonical" href="https://dralejanderoojalvo.com/" />
 	</head>
 	<body>
     <Header />

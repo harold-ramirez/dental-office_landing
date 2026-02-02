@@ -2,32 +2,40 @@
 import { services } from "@lib/services.ts"
 ---
 
-<section id="servicios" class="flex flex-col bg-blue-200 p-5 h-[90vh]">
-  <h2 class="mb-5 w-full font-semibold text-3xl text-center">Nuestros Servicios</h2>
-  <div class="flex-1 overflow-y-auto lg:gap-5 gap-2 grid grid-cols-4 lg:px-5 px-2">
-    {
-      services.map(service => (
-        <div class="group relative lg:col-span-1 col-span-4 lg:h-auto h-44 lg:rounded-xl rounded-md overflow-hidden select-none">
-          <img
-            loading="lazy"
-            alt={service.name}
-            src={service.photo}
-            class="absolute w-full h-full object-cover group-hover:scale-110 transition-all duration-500 will-change-transform"
-          />
-          <div class="absolute flex flex-col w-full h-[150%] transition-all translate-y-[30%] group-hover:translate-y-[-30%] duration-500 will-change-transform">
-            <div class="bg-linear-to-t from-black/70 to-transparent w-full h-1/2"/>
-            <div class="bg-black/70 w-full h-full"/>
+<section id="servicios" class="flex flex-col bg-linear-to-b from-gray-50 to-gray-100 px-4 py-16 lg:py-20">
+  <div class="max-w-7xl mx-auto w-full">
+    <h2 class="mb-4 font-bold text-4xl text-center text-gray-900">Nuestros Servicios</h2>
+    <p class="mb-12 text-center text-gray-600 max-w-2xl mx-auto">Ofrecemos una amplia variedad de tratamientos dentales especializados con tecnología de última generación para tu bienestar bucal</p>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+      {
+        services.map((service, index) => (
+          <div class="group relative rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 h-64 lg:h-72">
+            <img
+              loading="lazy"
+              alt={service.name}
+              src={service.photo}
+              class="absolute w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 will-change-transform"
+            />
+            <div class="absolute inset-0 bg-linear-to-t from-blue-950 via-blue-950/60 to-transparent opacity-80 group-hover:opacity-90 transition-opacity duration-300"/>
+            
+            <div class="absolute inset-0 flex flex-col justify-end p-6 text-white">
+              <h3 class="font-bold text-xl mb-2 group-hover:mb-3 transition-all duration-300">
+                {service.name}
+              </h3>
+              <p class="text-sm text-gray-200 line-clamp-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                {service.description}
+              </p>
+            </div>
           </div>
-          <div class="absolute inset-0 flex flex-col justify-center items-center gap-2 px-2 text-center transition-all translate-y-[60%] group-hover:translate-y-0 duration-500 will-change-transform">
-            <p class="font-bold text-white text-2xl">
-              {service.name}
-            </p>
-            <p class="opacity-0 group-hover:opacity-100 mb-3 text-white transition-opacity duration-300 will-change-auto">
-              {service.description}
-            </p>
-          </div>
-        </div>
-      ))
-    }
+        ))
+      }
+    </div>
+
+    <div class="flex justify-center mt-12">
+      <a href="#solicitarCita" class="bg-blue-600 hover:bg-blue-700 text-white font-bold px-8 py-3 rounded-lg transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-1">
+        Agendar Consulta
+      </a>
+    </div>
   </div>
 </section>

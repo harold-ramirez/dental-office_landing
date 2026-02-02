@@ -151,63 +151,67 @@ export default function (props: Props) {
             {">"}
           </button>
         </span>
-        <div className="gap-2 grid grid-cols-7">
-          {groupedDays.map((dayObj, index) => {
-            const dayDate = new Date(start);
-            dayDate.setDate(start.getDate() + index);
 
-            const formattedDate = dayDate
-              .toLocaleDateString("es-BO", { day: "numeric", month: "short" })
-              .replace(".", "");
+        {/* Responsive Grid Container with Scroll */}
+        <div className="overflow-x-auto pb-4 custom-scrollbar">
+          <div className="min-w-[700px] gap-2 grid grid-cols-7">
+            {groupedDays.map((dayObj, index) => {
+              const dayDate = new Date(start);
+              dayDate.setDate(start.getDate() + index);
 
-            return (
-              <span
-                key={index}
-                className="flex flex-col gap-2 col-span-1 text-center"
-              >
-                <p className="font-semibold">
-                  {dayObj.day}
-                  <br />
-                  <span className="font-normal text-gray-600 text-sm">
-                    {formattedDate}
-                  </span>
-                </p>
-                {dayObj.shifts.map((shift, hIndex) => {
-                  const shiftDate = new Date(shift.dateHour);
-                  const iso = shiftDate.toISOString();
-                  const hour = shiftDate.getHours();
-                  const minute = shiftDate.getMinutes();
-                  const timeStr = `${String(hour).padStart(2, "0")}:${String(
-                    minute,
-                  ).padStart(2, "0")}`;
+              const formattedDate = dayDate
+                .toLocaleDateString("es-BO", { day: "numeric", month: "short" })
+                .replace(".", "");
 
-                  const isSelected = selectedDate === iso;
+              return (
+                <div
+                  key={index}
+                  className="flex flex-col gap-2 col-span-1 text-center"
+                >
+                  <p className="font-semibold">
+                    {dayObj.day}
+                    <br />
+                    <span className="font-normal text-gray-600 text-sm capitalize">
+                      {formattedDate}
+                    </span>
+                  </p>
+                  {dayObj.shifts.map((shift, hIndex) => {
+                    const shiftDate = new Date(shift.dateHour);
+                    const iso = shiftDate.toISOString();
+                    const hour = shiftDate.getHours();
+                    const minute = shiftDate.getMinutes();
+                    const timeStr = `${String(hour).padStart(2, "0")}:${String(
+                      minute,
+                    ).padStart(2, "0")}`;
 
-                  return (
-                    <button
-                      type="button"
-                      key={hIndex}
-                      disabled={!shift.status}
-                      onClick={() => {
-                        onSelect && onSelect(iso);
-                      }}
-                      className={`rounded-sm text-center duration-500 px-4 py-2 ${
-                        shift.status
-                          ? "hover:bg-blue-500 hover:text-slate-100 hover:font-bold hover:text-lg "
-                          : "bg-gray-300 text-gray-400 pointer-events-none"
-                      } ${
-                        isSelected
-                          ? "bg-blue-500 text-slate-100 font-bold text-lg"
-                          : "bg-blue-200 text-blue-600 cursor-pointer"
-                      }`}
-                    >
-                      {timeStr}
-                    </button>
-                  );
-                })}
-              </span>
-            );
-          })}
+                    const isSelected = selectedDate === iso;
+
+                    return (
+                      <button
+                        type="button"
+                        key={hIndex}
+                        disabled={!shift.status}
+                        onClick={() => {
+                          onSelect && onSelect(iso);
+                        }}
+                        className={`rounded-sm text-center duration-500 px-4 py-2 ${
+                          shift.status
+                            ? "hover:bg-blue-500 hover:text-slate-100 hover:font-bold hover:text-lg "
+                            : "bg-gray-300 text-gray-400 pointer-events-none"
+                        } ${
+                          isSelected
+                            ? "bg-blue-500 text-slate-100 font-bold text-lg"
+                            : "bg-blue-200 text-blue-600 cursor-pointer"
+                        }`}
+                      >
+                        {timeStr}
+                      </button>
+                    );
+                  })}
+                </div>
+              );
+            })}
+          </div>
         </div>
       </div>
     </div>

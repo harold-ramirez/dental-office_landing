@@ -43,12 +43,6 @@ export const services: { name: string; description: string; photo: string }[] =
       photo: "/limpieza.webp",
     },
     {
-      name: "Tratamiento de Caries",
-      description:
-        "Soluciones duraderas para restaurar la función y estructura de tu diente. ¡Dile adiós al dolor y a las caries de una vez por todas!",
-      photo: "/caries.webp",
-    },
-    {
       name: "Endodoncia",
       description:
         "Salvando tu diente del daño severo con técnicas avanzadas. Alivio inmediato del dolor sin necesidad de recurrir a la extracción dental.",
@@ -59,17 +53,5 @@ export const services: { name: string; description: string; photo: string }[] =
       description:
         "Restaura la función y apariencia de dientes dañados o perdidos con soluciones protésicas fijas y estéticas.",
       photo: "/puente.webp",
-    },
-    {
-      name: "Prótesis Removible",
-      description:
-        "Recupera múltiples dientes perdidos. Soluciones cómodas y funcionales para volver a masticar con confianza.",
-      photo: "/protesis.webp",
-    },
-    {
-      name: "Extracción Dental",
-      description:
-        "Extracciones seguras y sin dolor. Somos especialistas en el manejo de muelas del juicio sin complicaciones.",
-      photo: "/extraccion.webp",
     },
   ];

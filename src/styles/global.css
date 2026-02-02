@@ -1,5 +1,37 @@
 @import "tailwindcss";
-html{
+
+html {
   scroll-behavior: smooth;
   scroll-padding-top: 10dvh;
+}
+
+/* Accesibilidad */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Mejora de Performance */
+img {
+  will-change: transform;
+}
+
+/* Focus visible para accesibilidad */
+*:focus-visible {
+  outline: 2px solid #2563eb;
+  outline-offset: 2px;
+}
+
+/* Mejor contraste en modo oscuro */
+@media (prefers-color-scheme: dark) {
+  body {
+    color-scheme: dark;
+  }
 }
