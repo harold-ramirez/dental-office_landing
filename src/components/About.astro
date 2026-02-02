@@ -4,8 +4,8 @@ import BarsIcon from "@icons/Bars.astro";
 import GroupIcon from "@icons/Group.astro";
 ---
 
-<section id="acerca" class="flex lg:flex-row flex-col justify-center items-center gap-12 bg-linear-to-br from-blue-50 via-white to-blue-50 px-4 py-16 lg:py-20">
-  <div class="flex flex-col items-center lg:items-start flex-1">
+<section id="acerca" class="relative z-10 flex lg:flex-row flex-col justify-center items-center gap-12 bg-linear-to-br from-blue-50 via-white to-blue-50 px-4 py-16 lg:py-20">
+  <div class="flex flex-col items-center flex-1 reveal">
     <div class="relative">
       <div class="absolute inset-0 bg-blue-600 rounded-2xl transform rotate-3 opacity-20"></div>
       <img
@@ -17,7 +17,7 @@ import GroupIcon from "@icons/Group.astro";
     </div>
   </div>
   
-  <div class="flex flex-col flex-1 gap-6">
+  <div class="flex flex-col flex-1 gap-6 reveal reveal-delay-200">
     <div>
       <h2 class="mb-2 font-bold text-4xl text-gray-900">Dr. Alexander Ojalvo</h2>
       <p class="text-blue-600 font-semibold text-lg">Pasión y Vanguardia en Odontología</p>

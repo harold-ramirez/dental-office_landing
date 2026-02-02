@@ -24,8 +24,8 @@ try {
 }
 ---
 
-<section id="ubicacion" class="flex lg:flex-row flex-col justify-center items-center h-[90vh] bg-linear-to-b from-gray-50 to-white">
-  <div class="flex flex-col justify-center items-center lg:w-1/2 w-full lg:h-full h-1/2 p-4 lg:p-0">
+<section id="ubicacion" class="relative z-10 flex lg:flex-row flex-col justify-center items-center gap-8 lg:gap-0 lg:h-[90vh] py-16 lg:py-0 bg-linear-to-b from-gray-50 to-white">
+  <div class="flex flex-col justify-center items-center lg:w-1/2 w-full lg:h-full p-6 lg:p-0 reveal">
     <span class="flex flex-col items-center gap-6 w-full lg:w-2/3 text-center lg:text-left">
       <div>
         <h3 class="w-full font-bold text-3xl mb-2 text-gray-900">Encuéntranos</h3>
@@ -66,16 +66,18 @@ try {
     </span>
   </div>
 
-  <div class="z-10 lg:p-5 p-0 lg:w-1/2 w-full lg:h-full h-1/2 shadow-inner lg:shadow-none">
-    <Leaflet
-      id="map-quick-start"
-      style={{ height: "100%", width: "100%" }}
-      options={{ center: [-17.383369, -66.2218407], zoom: 16 }}
-    >
-      <Marker latlng={[-17.383369, -66.2218407]}>
-        <Popup content="Odontología especializada <br/> Dr. Alexander Ojalvo" open />
-      </Marker>
-    </Leaflet> 
+  <div class="z-10 px-6 lg:p-5 w-full lg:w-1/2 h-80 lg:h-full shadow-inner lg:shadow-none reveal reveal-delay-200">
+    <div class="w-full h-full rounded-2xl overflow-hidden shadow-lg lg:shadow-none border border-gray-200 lg:border-none">
+      <Leaflet
+        id="map-quick-start"
+        style={{ height: "100%", width: "100%" }}
+        options={{ center: [-17.383369, -66.2218407], zoom: 16 }}
+      >
+        <Marker latlng={[-17.383369, -66.2218407]}>
+          <Popup content="Odontología especializada <br/> Dr. Alexander Ojalvo" open />
+        </Marker>
+      </Leaflet> 
+    </div>
   </div>
 </section>
 

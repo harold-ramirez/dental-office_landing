@@ -2,15 +2,15 @@
 import { services } from "@lib/services.ts"
 ---
 
-<section id="servicios" class="flex flex-col bg-linear-to-b from-gray-50 to-gray-100 px-4 py-16 lg:py-20">
+<section id="servicios" class="relative z-10 flex flex-col bg-linear-to-b from-gray-50 to-gray-100 px-4 py-16 lg:py-20 rounded-t-3xl lg:rounded-t-[3rem] shadow-[-10px_0_30px_-5px_rgba(0,0,0,0.1)]">
   <div class="max-w-7xl mx-auto w-full">
-    <h2 class="mb-4 font-bold text-4xl text-center text-gray-900">Nuestros Servicios</h2>
-    <p class="mb-12 text-center text-gray-600 max-w-2xl mx-auto">Ofrecemos una amplia variedad de tratamientos dentales especializados con tecnología de última generación para tu bienestar bucal</p>
+    <h2 class="mb-4 font-bold text-4xl text-center text-gray-900 reveal">Nuestros Servicios</h2>
+    <p class="mb-12 text-center text-gray-600 max-w-2xl mx-auto reveal reveal-delay-100">Ofrecemos una amplia variedad de tratamientos dentales especializados con tecnología de última generación para tu bienestar bucal</p>
     
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
       {
         services.map((service, index) => (
-          <div class="group relative rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 h-64 lg:h-72">
+          <div class="group relative rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 h-64 lg:h-72 reveal" style={`transition-delay: ${index % 3 * 100}ms`}>
             <img
               loading="lazy"
               alt={service.name}
