@@ -69,7 +69,7 @@ const labels = [
       target="_blank"
       rel="noopener noreferrer"
       title="Contactar por WhatsApp"
-      href={`https://wa.me/591${phoneNumber}`}
+      href={`https://wa.me/591${phoneNumber}?text=${encodeURIComponent("Buenos días doctor, vengo de su página web")}`}
       class="flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white font-semibold px-4 py-2 rounded-lg transition-all duration-300 shadow-lg hover:shadow-xl text-base"
     >
       <WhatsappIcon className="w-5 h-5" />

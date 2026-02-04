@@ -48,7 +48,7 @@ try {
       </div>
 
       <div class="flex flex-row gap-4 w-full max-w-sm">
-        <a href={`https://wa.me/591${phoneNumber}`} target="_blank" class="flex-1 flex flex-col items-center justify-center p-4 bg-white border border-gray-100 rounded-xl shadow-sm hover:shadow-md hover:border-green-400 transition-all group/phone">
+        <a href={`https://wa.me/591${phoneNumber}?text=${encodeURIComponent("Buenos días doctor, vengo de su página web")}`} target="_blank" class="flex-1 flex flex-col items-center justify-center p-4 bg-white border border-gray-100 rounded-xl shadow-sm hover:shadow-md hover:border-green-400 transition-all group/phone">
           <PhoneIcon className="w-6 h-6 text-green-500 mb-2 group-hover/phone:scale-110 transition-transform" />
           <span class="font-bold text-gray-800">Contáctanos</span>
           <span class="text-sm text-gray-500">+591 {phoneNumber}</span>
