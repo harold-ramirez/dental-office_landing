@@ -80,7 +80,11 @@ export default function (props: Props) {
         setApiData(null);
       }
     };
+
     fetchShifts();
+
+    const interval = setInterval(fetchShifts, 30000);
+    return () => clearInterval(interval);
   }, []);
 
   const days = [
