@@ -1,5 +1,5 @@
 import { usePhoneNumber } from "./PhoneNumberProvider";
-import PhoneIcon from "@icons/Phone.astro";
+import { PhoneIcon } from "./icons/PhoneIcon";
 
 export function FooterPhone() {
   const { phoneNumber, isLoading } = usePhoneNumber();

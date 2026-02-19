@@ -1,5 +1,5 @@
 import { usePhoneNumber } from "./PhoneNumberProvider";
-import WhatsappIcon from "@icons/Whatsapp.astro";
+import { WhatsappIcon } from "./icons/WhatsappIcon";
 
 export function HeaderWhatsapp() {
   const { phoneNumber, isLoading } = usePhoneNumber();
