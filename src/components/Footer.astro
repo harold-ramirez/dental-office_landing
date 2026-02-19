@@ -1,21 +1,6 @@
 ---
 import MapPinIcon from "@icons/MapPin.astro";
-import PhoneIcon from "@icons/Phone.astro"
-
-let phoneNumber: string | null = null;
-
-try {
-  const apiUrl = import.meta.env.PUBLIC_API_URL;
-  if(apiUrl) {
-    const response = await fetch(`${apiUrl}/appointment-requests/doctor-phoneNumber`);
-    if(response.ok) {
-        const text = await response.text();
-        if(text) phoneNumber = text;
-    }
-  }
-} catch (error) {
-  console.error("Failed to fetch phone number", error);
-}
+import { FooterPhone } from "@components/react/FooterPhone";
 
 const currentYear = new Date().getFullYear();
 ---
@@ -35,14 +20,7 @@ const currentYear = new Date().getFullYear();
       <div>
         <h3 class="text-white font-bold text-lg mb-4">Contacto</h3>
         <div class="space-y-3 text-sm">
-          <p class="flex items-center gap-2">
-            <PhoneIcon className="w-5 h-5 text-blue-400 shrink-0" />
-            {phoneNumber ? (
-              <a href={`tel:+591${phoneNumber}`} class="hover:text-blue-400 transition-colors">+591 {phoneNumber}</a>
-            ) : (
-              <span class="text-gray-500 cursor-not-allowed">No disponible</span>
-            )}
-          </p>
+          <FooterPhone client:load />
           <p class="flex items-start gap-2">
             <MapPinIcon className="w-5 h-5 text-blue-400 shrink-0 mt-0.5" />
             <span>Av. 16 de Julio y D'orbigny, Zona Capacachi<br/>Colcapirhua - Cochabamba</span>

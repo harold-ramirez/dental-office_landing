@@ -3,21 +3,6 @@ import Footer from '@components/Footer.astro'
 import Header from '@components/Header.astro'
 import '@styles/global.css'
 
-let phoneNumber: string | null = null;
-
-try {
-  const apiUrl = import.meta.env.PUBLIC_API_URL;
-  if(apiUrl) {
-    const response = await fetch(`${apiUrl}/appointment-requests/doctor-phoneNumber`);
-    if(response.ok) {
-        const text = await response.text();
-        if(text) phoneNumber = text;
-    }
-  }
-} catch (error) {
-  console.error("Failed to fetch phone number", error);
-}
-
 interface Props {
   title: string
 }
@@ -37,7 +22,6 @@ const localBusinessSchema = {
 		"postalCode": "",
 		"addressCountry": "BO"
 	},
-	...(phoneNumber ? { "telephone": `+591 ${phoneNumber}` } : {}),
 	"priceRange": "$$$",
 	"areaServed": "Cochabamba",
 	"serviceType": "Dental Care",
@@ -64,8 +48,7 @@ const dentistSchema = {
 	"image": "/profile.webp",
 	"description": "Especialista en odontología con años de experiencia",
 	"knowsAbout": ["General Dentistry", "Dental Implants", "Orthodontics", "Cosmetic Dentistry", "Endodontics"],
-	"url": "https://dralejanderoojalvo.com/",
-	...(phoneNumber ? { "telephone": `+591 ${phoneNumber}` } : {})
+	"url": "https://dralejanderoojalvo.com/"
 };
 ---
 
@@ -135,6 +118,41 @@ const dentistSchema = {
       // Initialize on load
       window.addEventListener('load', initAnimations);
       document.addEventListener('astro:page-load', initAnimations);
+
+      // Update JSON-LD schemas with phone number when available
+      async function updateSchemaWithPhoneNumber() {
+        try {
+          const apiUrl = import.meta.env.PUBLIC_API_URL || '';
+          if (!apiUrl) return;
+          
+          const response = await fetch(`${apiUrl}/appointment-requests/doctor-phoneNumber`);
+          if (!response.ok) return;
+          
+          const phoneNumber = await response.text();
+          if (!phoneNumber) return;
+
+          // Update LocalBusiness schema
+          const localBusinessScript = document.querySelector('script[type="application/ld+json"]:nth-of-type(1)');
+          if (localBusinessScript) {
+            const schema = JSON.parse(localBusinessScript.textContent);
+            schema.telephone = `+591 ${phoneNumber}`;
+            localBusinessScript.textContent = JSON.stringify(schema);
+          }
+
+          // Update Dentist schema
+          const dentistScript = document.querySelector('script[type="application/ld+json"]:nth-of-type(2)');
+          if (dentistScript) {
+            const schema = JSON.parse(dentistScript.textContent);
+            schema.telephone = `+591 ${phoneNumber}`;
+            dentistScript.textContent = JSON.stringify(schema);
+          }
+        } catch (error) {
+          console.error('Failed to update schemas with phone number:', error);
+        }
+      }
+
+      // Run after page load
+      window.addEventListener('load', updateSchemaWithPhoneNumber);
     </script>
 	</body>
 </html>
