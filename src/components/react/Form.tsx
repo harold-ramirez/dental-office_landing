@@ -28,6 +28,7 @@ export default function (props: Props) {
     phoneNumber: "",
     message: "",
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   // formatea ISO a un string legible en español
   const formattedDateDisplay = useMemo(() => {
@@ -66,6 +67,8 @@ export default function (props: Props) {
 
     const baseUrl = api.endsWith("/") ? api.slice(0, -1) : api;
 
+    setIsSubmitting(true);
+
     try {
       const response = await fetch(`${baseUrl}/appointment-requests`, {
         method: "POST",
@@ -78,14 +81,17 @@ export default function (props: Props) {
       if (!response.ok) {
         let msg = "Algo salió mal, por favor intente de nuevo";
         if (response.status === 409) {
-           const errData = await response.json().catch(() => ({}));
-           if (errData.message === 'Slot not available') {
-              msg = "El horario seleccionado ya no está disponible. Por favor seleccione otro.";
-           } else if (errData.message === 'Request already exists for this slot') {
-              msg = "Ya existe una solicitud pendiente para este horario.";
-           } else {
-              msg = "Conflicto en la reserva. Intente otro horario.";
-           }
+          const errData = await response.json().catch(() => ({}));
+          if (errData.message === "Slot not available") {
+            msg =
+              "El horario seleccionado ya no está disponible. Por favor seleccione otro.";
+          } else if (
+            errData.message === "Request already exists for this slot"
+          ) {
+            msg = "Ya existe una solicitud pendiente para este horario.";
+          } else {
+            msg = "Conflicto en la reserva. Intente otro horario.";
+          }
         }
         throw new Error(msg);
       }
@@ -102,7 +108,8 @@ export default function (props: Props) {
       setErrorMessage(false);
       setModalConfig({
         title: "Éxito",
-        message: "Su cita ha sido reservada! Si existiera algún cambio, el doctor se pondrá en contacto con usted mediante WhatsApp. Gracias por su preferencia!",
+        message:
+          "Su cita ha sido reservada! Si existiera algún cambio, el doctor se pondrá en contacto con usted mediante WhatsApp. Gracias por su preferencia!",
         buttonText: "Aceptar",
         type: "success",
       });
@@ -115,6 +122,7 @@ export default function (props: Props) {
         type: "error",
       });
     } finally {
+      setIsSubmitting(false);
       setModal(true);
     }
   };
@@ -158,7 +166,10 @@ export default function (props: Props) {
               maxLength={8}
               value={formData.phoneNumber}
               onChange={(e) =>
-                setFormData({ ...formData, phoneNumber: e.target.value })
+                setFormData({
+                  ...formData,
+                  phoneNumber: e.target.value.replace(/\D/g, ""),
+                })
               }
               className="px-4 py-2 w-full"
             />
@@ -199,9 +210,10 @@ export default function (props: Props) {
 
         <button
           type="submit"
-          className="bg-blue-400 hover:bg-blue-500 mt-4 py-2 rounded-lg text-white transition-colors duration-500 cursor-pointer"
+          disabled={isSubmitting}
+          className={`bg-blue-400 hover:bg-blue-500 mt-4 py-2 rounded-lg text-white transition-colors duration-500 ${isSubmitting ? "opacity-70 cursor-not-allowed" : "cursor-pointer"}`}
         >
-          Reservar Cita
+          {isSubmitting ? "Enviando..." : "Reservar Cita"}
         </button>
       </form>
       {modal && (
