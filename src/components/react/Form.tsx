@@ -1,6 +1,5 @@
-import { useEffect, useState, useMemo, useRef } from "react";
+import { useEffect, useState, useMemo } from "react";
 import Modal from "./Modal";
-import { io, type Socket } from "socket.io-client";
 
 interface Props {
   className?: string;
@@ -9,14 +8,19 @@ interface Props {
 }
 
 export default function (props: Props) {
-  const socketRef = useRef<Socket | null>(null);
   const { className, selectedDate } = props;
   const [modal, setModal] = useState(false);
   const [errorMessage, setErrorMessage] = useState(false);
-  const [modalConfig, setModalConfig] = useState({
+  const [modalConfig, setModalConfig] = useState<{
+    title: string;
+    message: string;
+    buttonText: string;
+    type: "success" | "error";
+  }>({
     title: "",
     message: "",
     buttonText: "",
+    type: "success",
   });
   const [formData, setFormData] = useState({
     patientFullName: "",
@@ -42,43 +46,6 @@ export default function (props: Props) {
     return fmt.charAt(0).toUpperCase() + fmt.slice(1); // capitalizar
   }, [formData.dateHourRequest, selectedDate]);
 
-  const connectSocket = (api: string, timeout = 5000): Promise<Socket> =>
-    new Promise((resolve, reject) => {
-      const s = io(api, {
-        autoConnect: true,
-        transports: ["websocket", "polling"],
-      });
-      const t = setTimeout(() => {
-        s.disconnect();
-        reject(new Error("Timeout connecting to socket"));
-      }, timeout);
-
-      const cleanup = () => {
-        clearTimeout(t);
-        s.off("connect");
-        s.off("connect_error");
-      };
-
-      s.on("connect", () => {
-        cleanup();
-        resolve(s);
-      });
-
-      s.on("connect_error", (err: any) => {
-        cleanup();
-        s.disconnect();
-        reject(err);
-      });
-    });
-
-  // limpio al desmontar si quedó una conexión persistente
-  useEffect(() => {
-    return () => {
-      socketRef.current?.disconnect();
-      socketRef.current = null;
-    };
-  }, []);
-
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (
@@ -97,30 +64,32 @@ export default function (props: Props) {
         ? raw
         : `http://${raw}`;
 
-    let socket = socketRef.current;
-    let createdForThisEmit = false;
+    const baseUrl = api.endsWith("/") ? api.slice(0, -1) : api;
 
     try {
-      if (!socket || !socket.connected) {
-        // conectar solo para este envío (o reutilizar si ya existe)
-        socket = await connectSocket(api);
-        socketRef.current = socket;
-        createdForThisEmit = true;
+      const response = await fetch(`${baseUrl}/appointment-requests`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (!response.ok) {
+        let msg = "Algo salió mal, por favor intente de nuevo";
+        if (response.status === 409) {
+           const errData = await response.json().catch(() => ({}));
+           if (errData.message === 'Slot not available') {
+              msg = "El horario seleccionado ya no está disponible. Por favor seleccione otro.";
+           } else if (errData.message === 'Request already exists for this slot') {
+              msg = "Ya existe una solicitud pendiente para este horario.";
+           } else {
+              msg = "Conflicto en la reserva. Intente otro horario.";
+           }
+        }
+        throw new Error(msg);
       }
 
-      // emitir el objeto directamente; usar ack para respuesta del servidor
-      await new Promise<void>((resolve, reject) => {
-        // timeout por si no responde el servidor
-        const ackTimeout = setTimeout(() => {
-          reject(new Error("No ack from server"));
-        }, 5000);
-
-        socket!.emit("onNewRequest", formData, (response: any) => {
-          clearTimeout(ackTimeout);
-          console.log("Servidor confirmó:", response);
-          resolve();
-        });
-      });
       // limpiar form y mostrar modal de éxito
       setFormData({
         patientFullName: "",
@@ -128,52 +97,25 @@ export default function (props: Props) {
         phoneNumber: "",
         message: "",
       });
+      console.log("Success, clearing form");
       props.onClearSelected && props.onClearSelected();
       setErrorMessage(false);
       setModalConfig({
         title: "Éxito",
-        message: "Su cita ha sido reservada!",
+        message: "Su cita ha sido reservada! Si existiera algún cambio, el doctor se pondrá en contacto con usted mediante WhatsApp. Gracias por su preferencia!",
         buttonText: "Aceptar",
+        type: "success",
       });
-      // const res = await fetch(`${apiUrl}/appointment-requests`, {
-      //   method: "POST",
-      //   headers: { "Content-Type": "application/json" },
-      //   body: JSON.stringify(formData),
-      // });
-      // if (res.ok) {
-      //   setFormData({
-      //     patientFullName: "",
-      //     dateHourRequest: "",
-      //     phoneNumber: "",
-      //     message: "",
-      //   });
-      //   setErrorMessage(false);
-      //   setModalConfig({
-      //     title: "Exito",
-      //     message: "Su cita ha sido reservada!",
-      //     buttonText: "Aceptar",
-      //   });
-      // } else {
-      //   setModalConfig({
-      //     title: "Oh oh",
-      //     message: "Algo salió mal, por favor intente de nuevo",
-      //     buttonText: "Aceptar",
-      //   });
-      // }
-    } catch (error) {
-      console.error("Error:", error);
+    } catch (error: any) {
+      console.error("Error submitting form:", error);
       setModalConfig({
-        title: "Oh oh",
-        message: "Algo salió mal, por favor intente de nuevo",
-        buttonText: "Aceptar",
+        title: "No se pudo reservar",
+        message: error.message || "Algo salió mal, por favor intente de nuevo",
+        buttonText: "Entendido",
+        type: "error",
       });
     } finally {
       setModal(true);
-      // si la conexión fue creada sólo para este emit, desconectarla
-      if (createdForThisEmit && socketRef.current) {
-        socketRef.current.disconnect();
-        socketRef.current = null;
-      }
     }
   };
 
@@ -267,6 +209,7 @@ export default function (props: Props) {
           title={modalConfig.title}
           message={modalConfig.message}
           buttonText={modalConfig.buttonText}
+          type={modalConfig.type}
           onClose={() => setModal(false)}
         />
       )}

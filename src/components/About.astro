@@ -5,14 +5,15 @@ import GroupIcon from "@icons/Group.astro";
 ---
 
 <section id="acerca" class="relative z-10 flex lg:flex-row flex-col justify-center items-center gap-12 bg-linear-to-br from-blue-50 via-white to-blue-50 px-4 py-16 lg:py-20">
-  <div class="flex flex-col items-center flex-1 reveal">
-    <div class="relative">
-      <div class="absolute inset-0 bg-blue-600 rounded-2xl transform rotate-3 opacity-20"></div>
+  <div class="flex flex-col items-center justify-center flex-1 reveal p-8">
+    <div class="relative group">
+      <div class="absolute inset-0 bg-blue-600 rounded-3xl transform rotate-6 scale-105 opacity-20 transition-transform duration-500 group-hover:rotate-3"></div>
+      <div class="absolute inset-0 bg-blue-400 rounded-3xl transform -rotate-3 scale-105 opacity-20 transition-transform duration-500 group-hover:-rotate-1"></div>
       <img
-        src="/profile.webp"
+        src="/doctor_Alexander_Ojalvo.webp"
         alt="Dr. Alexander Ojalvo - Especialista en Odontología"
         loading="lazy"
-        class="relative rounded-2xl shadow-2xl w-80 h-80 object-cover border-4 border-white"
+        class="relative rounded-2xl shadow-2xl w-full max-w-sm md:max-w-md aspect-square object-cover border-8 border-white transition-transform duration-500 group-hover:scale-[1.02]"
       />
     </div>
   </div>

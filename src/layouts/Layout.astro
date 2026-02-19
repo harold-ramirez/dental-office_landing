@@ -3,7 +3,7 @@ import Footer from '@components/Footer.astro'
 import Header from '@components/Header.astro'
 import '@styles/global.css'
 
-let phoneNumber = "72223681";
+let phoneNumber: string | null = null;
 
 try {
   const apiUrl = import.meta.env.PUBLIC_API_URL;
@@ -22,6 +22,51 @@ interface Props {
   title: string
 }
 const { title } = Astro.props
+
+const localBusinessSchema = {
+	"@context": "https://schema.org",
+	"@type": "LocalBusiness",
+	"name": "Odontología Especializada Dr. Alexander Ojalvo",
+	"image": "/logo.webp",
+	"description": "Servicio de odontología especializada con técnicas de vanguardia",
+	"address": {
+		"@type": "PostalAddress",
+		"streetAddress": "Av. 16 de Julio y D'orbigny, Zona Capacachi",
+		"addressLocality": "Cochabamba",
+		"addressRegion": "Cochabamba",
+		"postalCode": "",
+		"addressCountry": "BO"
+	},
+	...(phoneNumber ? { "telephone": `+591 ${phoneNumber}` } : {}),
+	"priceRange": "$$$",
+	"areaServed": "Cochabamba",
+	"serviceType": "Dental Care",
+	"openingHoursSpecification": {
+		"@type": "OpeningHoursSpecification",
+		"dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+		"opens": "08:00",
+		"closes": "16:00"
+	},
+	"sameAs": [
+		"https://www.facebook.com/dralejanderoojalvo"
+	],
+	"geo": {
+		"@type": "GeoCoordinates",
+		"latitude": -17.383329,
+		"longitude": -66.221854
+	}
+};
+
+const dentistSchema = {
+	"@context": "https://schema.org",
+	"@type": "Dentist",
+	"name": "Dr. Alexander Ojalvo",
+	"image": "/profile.webp",
+	"description": "Especialista en odontología con años de experiencia",
+	"knowsAbout": ["General Dentistry", "Dental Implants", "Orthodontics", "Cosmetic Dentistry", "Endodontics"],
+	"url": "https://dralejanderoojalvo.com/",
+	...(phoneNumber ? { "telephone": `+591 ${phoneNumber}` } : {})
+};
 ---
 
 <html lang="es">
@@ -50,50 +95,10 @@ const { title } = Astro.props
 		<meta name="twitter:image" content="/og-image.webp" />
 		
 		<!-- Local Business Schema -->
-		<script type="application/ld+json">
-		{
-			"@context": "https://schema.org",
-			"@type": "LocalBusiness",
-			"name": "Odontología Especializada Dr. Alexander Ojalvo",
-			"image": "/logo.webp",
-			"description": "Servicio de odontología especializada con técnicas de vanguardia",
-			"address": {
-				"@type": "PostalAddress",
-				"streetAddress": "Av. 16 de Julio y D'orbigny, Zona Capacachi",
-				"addressLocality": "Cochabamba",
-				"addressRegion": "Cochabamba",
-				"postalCode": "",
-				"addressCountry": "BO"
-			},
-			"telephone": "+591 {phoneNumber}",
-			"priceRange": "$$$",
-			"areaServed": "Cochabamba",
-			"serviceType": "Dental Care",
-			"openingHoursSpecification": {
-				"@type": "OpeningHoursSpecification",
-				"dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-				"opens": "08:00",
-				"closes": "16:00"
-			},
-			"sameAs": [
-				"https://www.facebook.com/dralejanderoojalvo"
-			]
-		}
-		</script>
+		<script type="application/ld+json" set:html={JSON.stringify(localBusinessSchema)} />
 		
 		<!-- Dentist Professional Schema -->
-		<script type="application/ld+json">
-		{
-			"@context": "https://schema.org",
-			"@type": "Dentist",
-			"name": "Dr. Alexander Ojalvo",
-			"image": "/profile.webp",
-			"description": "Especialista en odontología con años de experiencia",
-			"knowsAbout": ["General Dentistry", "Dental Implants", "Orthodontics", "Cosmetic Dentistry", "Endodontics"],
-			"url": "https://dralejanderoojalvo.com/",
-			"telephone": "+591 72223681"
-		}
-		</script>
+		<script type="application/ld+json" set:html={JSON.stringify(dentistSchema)} />
 		
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<link rel="canonical" href="https://dralejanderoojalvo.com/" />

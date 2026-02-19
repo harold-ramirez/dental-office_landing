@@ -25,6 +25,7 @@ export default function (props: Props) {
   const today = new Date();
   const [weekOffset, setWeekOffset] = useState(0);
   const [apiData, setApiData] = useState<ApiResponse | null>(null);
+  const [error, setError] = useState(false);
 
   const getStartOfWeek = (date: Date) => {
     const day = date.getDay();
@@ -73,11 +74,16 @@ export default function (props: Props) {
             : `http://${apiUrl}`;
         const data = await fetch(
           `${normApi}/appointment-requests/calendar`,
-        ).then((res) => res.json());
+        ).then((res) => {
+          if(!res.ok) throw new Error("Failed to fetch calendar");
+          return res.json();
+        });
         setApiData(data);
+        setError(false);
       } catch (err) {
         console.error("FetchShifts error:", err);
         setApiData(null);
+        setError(true);
       }
     };
 
@@ -129,30 +135,71 @@ export default function (props: Props) {
       return next;
     });
 
+  if (error) {
+    return (
+      <div
+        className={`${className} p-4 max-h-[70vh] bg-slate-200 rounded-xl flex items-center justify-center min-h-[400px]`}
+      >
+        <div className="flex flex-col items-center gap-4 text-center text-gray-500 p-6">
+          <svg
+            className="w-16 h-16 text-gray-400"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="1.5"
+              d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+            />
+          </svg>
+          <div>
+            <p className="font-bold text-lg text-gray-600">
+              No se pudo cargar el horario
+            </p>
+            <p className="text-sm mt-1 max-w-xs mx-auto">
+              Hubo un problema al conectar con el servidor. Por favor, intenta de
+              nuevo más tarde o contáctanos por WhatsApp.
+            </p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div
       className={`${className} p-4 pr-0 max-h-[70vh] bg-slate-200 rounded-xl`}
     >
       <div className="flex flex-col gap-5 pr-4 h-full overflow-y-auto scroll-smooth">
-        <span className="flex justify-between items-center">
+        <span className="flex justify-between items-center bg-white p-3 rounded-xl shadow-sm mb-2">
           <button
             type="button"
             onClick={goPrev}
             disabled={weekOffset <= 0}
-            className="disabled:opacity-40 px-2 cursor-pointer disabled:cursor-not-allowed"
+            className="p-2 rounded-full hover:bg-gray-100 disabled:opacity-30 disabled:hover:bg-transparent transition-colors cursor-pointer disabled:cursor-not-allowed text-blue-600"
             aria-label="Semana anterior"
           >
-            {"<"}
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-6 h-6">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+            </svg>
           </button>
-          <p className="font-medium text-xl select-none">{label}</p>
+          
+          <p className="font-bold text-lg text-gray-700 select-none text-center min-w-[200px] capitalize">
+             {label.toLowerCase()}
+          </p>
+
           <button
             type="button"
             onClick={goNext}
             disabled={weekOffset >= 1}
-            className="disabled:opacity-40 px-2 cursor-pointer disabled:cursor-not-allowed"
+            className="p-2 rounded-full hover:bg-gray-100 disabled:opacity-30 disabled:hover:bg-transparent transition-colors cursor-pointer disabled:cursor-not-allowed text-blue-600"
             aria-label="Siguiente semana"
           >
-            {">"}
+             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-6 h-6">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+            </svg>
           </button>
         </span>
 

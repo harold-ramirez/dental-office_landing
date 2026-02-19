@@ -2,7 +2,7 @@
 import MapPinIcon from "@icons/MapPin.astro";
 import PhoneIcon from "@icons/Phone.astro"
 
-let phoneNumber = "72223681";
+let phoneNumber: string | null = null;
 
 try {
   const apiUrl = import.meta.env.PUBLIC_API_URL;
@@ -37,7 +37,11 @@ const currentYear = new Date().getFullYear();
         <div class="space-y-3 text-sm">
           <p class="flex items-center gap-2">
             <PhoneIcon className="w-5 h-5 text-blue-400 shrink-0" />
-            <a href={`tel:+591${phoneNumber}`} class="hover:text-blue-400 transition-colors">+591 {phoneNumber}</a>
+            {phoneNumber ? (
+              <a href={`tel:+591${phoneNumber}`} class="hover:text-blue-400 transition-colors">+591 {phoneNumber}</a>
+            ) : (
+              <span class="text-gray-500 cursor-not-allowed">No disponible</span>
+            )}
           </p>
           <p class="flex items-start gap-2">
             <MapPinIcon className="w-5 h-5 text-blue-400 shrink-0 mt-0.5" />
