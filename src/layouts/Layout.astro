@@ -147,7 +147,7 @@ const dentistSchema = {
             dentistScript.textContent = JSON.stringify(schema);
           }
         } catch (error) {
-          console.error('Failed to update schemas with phone number:', error);
+          // Error silencioso al actualizar schemas
         }
       }
 

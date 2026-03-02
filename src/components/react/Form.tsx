@@ -1,6 +1,13 @@
 import { useEffect, useState, useMemo } from "react";
 import Modal from "./Modal";
 
+const BOLIVIA_TIMEZONE = "America/La_Paz";
+
+const parseUtcDate = (value: string) => {
+  const hasTimezone = /(?:Z|[+-]\d{2}:\d{2})$/i.test(value);
+  return new Date(hasTimezone ? value : `${value}Z`);
+};
+
 interface Props {
   className?: string;
   selectedDate?: string;
@@ -34,9 +41,10 @@ export default function (props: Props) {
   const formattedDateDisplay = useMemo(() => {
     const iso = formData.dateHourRequest || selectedDate;
     if (!iso) return "";
-    const d = new Date(iso);
+    const d = parseUtcDate(iso);
     if (Number.isNaN(d.getTime())) return iso; // fallback
     const fmt = d.toLocaleString("es-BO", {
+      timeZone: BOLIVIA_TIMEZONE,
       weekday: "long",
       day: "numeric",
       month: "long",
@@ -96,14 +104,13 @@ export default function (props: Props) {
         throw new Error(msg);
       }
 
-      // limpiar form y mostrar modal de éxito
+      // Limpiar form y mostrar modal de éxito
       setFormData({
         patientFullName: "",
         dateHourRequest: "",
         phoneNumber: "",
         message: "",
       });
-      console.log("Success, clearing form");
       props.onClearSelected && props.onClearSelected();
       setErrorMessage(false);
       setModalConfig({
@@ -114,7 +121,6 @@ export default function (props: Props) {
         type: "success",
       });
     } catch (error: any) {
-      console.error("Error submitting form:", error);
       setModalConfig({
         title: "No se pudo reservar",
         message: error.message || "Algo salió mal, por favor intente de nuevo",
@@ -199,6 +205,10 @@ export default function (props: Props) {
             className="bg-slate-100 px-4 py-2 border border-gray-400 rounded-lg text-center"
           />
         </label>
+
+        <p className="text-sm text-gray-600 text-center">
+          ⚠️ Las reservas deben hacerse con un mínimo de 3 horas de anticipación
+        </p>
 
         <span
           className={`text-center text-red-500 ${

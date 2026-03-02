@@ -18,7 +18,7 @@ export function usePhoneNumber() {
           }
         }
       } catch (error) {
-        console.error("Failed to fetch phone number", error);
+        // Error silencioso - el fetch falló
       } finally {
         setIsLoading(false);
       }

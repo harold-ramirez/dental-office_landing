@@ -1,5 +1,12 @@
 import { useEffect, useState, useMemo } from "react";
 
+const BOLIVIA_TIMEZONE = "America/La_Paz";
+
+const parseUtcDate = (value: string) => {
+  const hasTimezone = /(?:Z|[+-]\d{2}:\d{2})$/i.test(value);
+  return new Date(hasTimezone ? value : `${value}Z`);
+};
+
 interface Props {
   className?: string;
   selectedDate?: string;
@@ -75,20 +82,18 @@ export default function (props: Props) {
         const data = await fetch(
           `${normApi}/appointment-requests/calendar`,
         ).then((res) => {
-          if(!res.ok) throw new Error("Failed to fetch calendar");
+          if (!res.ok) throw new Error("Failed to fetch calendar");
           return res.json();
         });
         setApiData(data);
         setError(false);
       } catch (err) {
-        console.error("FetchShifts error:", err);
         setApiData(null);
         setError(true);
       }
     };
 
     fetchShifts();
-
     const interval = setInterval(fetchShifts, 30000);
     return () => clearInterval(interval);
   }, []);
@@ -159,8 +164,8 @@ export default function (props: Props) {
               No se pudo cargar el horario
             </p>
             <p className="text-sm mt-1 max-w-xs mx-auto">
-              Hubo un problema al conectar con el servidor. Por favor, intenta de
-              nuevo más tarde o contáctanos por WhatsApp.
+              Hubo un problema al conectar con el servidor. Por favor, intenta
+              de nuevo más tarde o contáctanos por WhatsApp.
             </p>
           </div>
         </div>
@@ -181,13 +186,24 @@ export default function (props: Props) {
             className="p-2 rounded-full hover:bg-gray-100 disabled:opacity-30 disabled:hover:bg-transparent transition-colors cursor-pointer disabled:cursor-not-allowed text-blue-600"
             aria-label="Semana anterior"
           >
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-6 h-6">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={2.5}
+              stroke="currentColor"
+              className="w-6 h-6"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M15.75 19.5L8.25 12l7.5-7.5"
+              />
             </svg>
           </button>
-          
+
           <p className="font-bold text-lg text-gray-700 select-none text-center min-w-[200px] capitalize">
-             {label.toLowerCase()}
+            {label.toLowerCase()}
           </p>
 
           <button
@@ -197,8 +213,19 @@ export default function (props: Props) {
             className="p-2 rounded-full hover:bg-gray-100 disabled:opacity-30 disabled:hover:bg-transparent transition-colors cursor-pointer disabled:cursor-not-allowed text-blue-600"
             aria-label="Siguiente semana"
           >
-             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-6 h-6">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={2.5}
+              stroke="currentColor"
+              className="w-6 h-6"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M8.25 4.5l7.5 7.5-7.5 7.5"
+              />
             </svg>
           </button>
         </span>
@@ -227,10 +254,20 @@ export default function (props: Props) {
                     </span>
                   </p>
                   {dayObj.shifts.map((shift, hIndex) => {
-                    const shiftDate = new Date(shift.dateHour);
+                    const shiftDate = parseUtcDate(shift.dateHour);
                     const iso = shiftDate.toISOString();
-                    const hour = shiftDate.getHours();
-                    const minute = shiftDate.getMinutes();
+                    const timeParts = new Intl.DateTimeFormat("es-BO", {
+                      timeZone: BOLIVIA_TIMEZONE,
+                      hour: "2-digit",
+                      minute: "2-digit",
+                      hour12: false,
+                    }).formatToParts(shiftDate);
+                    const hour =
+                      timeParts.find((part) => part.type === "hour")?.value ??
+                      "00";
+                    const minute =
+                      timeParts.find((part) => part.type === "minute")?.value ??
+                      "00";
                     const timeStr = `${String(hour).padStart(2, "0")}:${String(
                       minute,
                     ).padStart(2, "0")}`;

@@ -20,7 +20,9 @@ html {
 
 /* Mejora de Performance */
 img {
-  will-change: transform;
+  will-change: auto;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
 }
 
 /* Focus visible para accesibilidad */
@@ -33,12 +35,14 @@ img {
 .reveal {
   opacity: 0;
   transform: translateY(30px);
-  transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+  transition: opacity 0.6s cubic-bezier(0.5, 0, 0, 1), transform 0.6s cubic-bezier(0.5, 0, 0, 1);
+  will-change: opacity, transform;
 }
 
 .reveal.active {
   opacity: 1;
   transform: translateY(0);
+  will-change: auto;
 }
 
 /* Staggered delays for children */
@@ -57,4 +61,15 @@ img {
   body {
     color-scheme: dark;
   }
+}
+
+/* Arreglar transparencia en scroll rápido */
+section {
+  will-change: auto;
+  position: relative;
+  isolation: isolate;
+}
+
+body {
+  background-color: #ffffff;
 }
