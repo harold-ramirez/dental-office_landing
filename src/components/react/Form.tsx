@@ -145,7 +145,7 @@ export default function (props: Props) {
         onSubmit={handleSubmit}
         className={`flex flex-col gap-2 ${className}`}
       >
-        <h3 className="font-semibold text-xl">Llena tus Datos</h3>
+        <h3 className="font-semibold text-xl">Llena tus Datos - DEMO</h3>
         {/* Patient's name */}
         <label className="flex flex-col w-full">
           Nombre Completo del Paciente

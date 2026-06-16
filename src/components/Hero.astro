@@ -1,52 +1,128 @@
-<section id="inicio" class="relative z-0 flex items-center justify-center bg-[url('/images/dentalOfficeBG.webp')] bg-cover bg-no-repeat bg-center min-h-[calc(100vh-5rem)] bg-blue-900 bg-attachment-fixed ">
-  <div class="top-0 left-0 absolute flex flex-col justify-center gap-4 lg:gap-6 bg-linear-to-r from-blue-950/85 via-blue-950/75 to-transparent px-6 py-12 lg:p-8 w-full h-full text-white">
-    <h1 class="lg:w-1/2 w-full font-bold lg:text-6xl text-4xl leading-tight">
-      Tu sonrisa perfecta, <span class="text-transparent bg-clip-text bg-linear-to-r from-blue-300 to-blue-100">diseñada por expertos</span>
+<section
+  id="inicio"
+  class="z-0 bg-attachment-fixed relative flex justify-center items-center bg-[url('/images/dentalOfficeBG.webp')] bg-blue-900 bg-cover bg-no-repeat bg-center min-h-[calc(100vh-5rem)]"
+>
+  <div
+    class="top-0 left-0 absolute flex flex-col justify-center items-center gap-4 lg:gap-6 bg-blue-950/80 lg:p-8 px-6 py-12 w-full h-full text-white text-center"
+  >
+    <h1 class="w-full lg:w-2/3 font-bold text-4xl lg:-mt-8 lg:text-7xl leading-tight">
+      Tu sonrisa perfecta, <span
+        class="bg-clip-text bg-linear-to-r from-blue-400 to-blue-600 text-transparent"
+        >diseñada por expertos</span
+      >
     </h1>
-    <p class="lg:w-1/2 w-full lg:text-lg text-base leading-relaxed text-slate-100">
-      Ofrecemos cuidado dental de vanguardia en un ambiente moderno y confortable. Confía en nosotros para lograr la salud bucal que mereces.
+
+    <p
+      class="w-full lg:w-2/3 text-slate-100 text-base lg:text-2xl leading-relaxed"
+    >
+      Ofrecemos cuidado dental de vanguardia en un ambiente moderno y
+      confortable. Confía en nosotros para lograr la salud bucal que mereces.
     </p>
-    
-    <div class="flex flex-col lg:flex-row gap-4 mt-4">
+
+    <div class="flex flex-wrap justify-center gap-3 lg:gap-6 mb-6 lg:mb-8">
+      <div class="flex items-center gap-2">
+        <svg
+          class="size-8 text-blue-300"
+          fill="currentColor"
+          viewBox="0 0 20 20"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+            clip-rule="evenodd"></path>
+        </svg>
+        <span class="text-sm lg:text-lg">Tecnología de última generación</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <svg
+          class="size-8 text-blue-300"
+          fill="currentColor"
+          viewBox="0 0 20 20"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+            clip-rule="evenodd"></path>
+        </svg>
+        <span class="text-sm lg:text-lg">Atención personalizada</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <svg
+          class="size-8 text-blue-300"
+          fill="currentColor"
+          viewBox="0 0 20 20"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+            clip-rule="evenodd"></path>
+        </svg>
+        <span class="text-sm lg:text-lg">Excelencia en odontología</span>
+      </div>
+    </div>
+
+    <div class="flex lg:flex-row flex-col gap-4 mt-4">
       <a
         href="#solicitar-cita"
-        class="group relative inline-block bg-blue-500 hover:bg-blue-600 text-white font-bold px-8 py-3 rounded-lg transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-1"
+        class="group inline-block relative bg-linear-to-r from-blue-500 hover:from-blue-600 to-blue-600 shadow-lg hover:shadow-xl px-8 py-3 rounded-lg font-semibold text-white transition-all hover:-translate-y-1 duration-300"
       >
-        <span class="relative flex items-center gap-2">
-          Reservar Cita Ahora
-          <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+        <span class="relative flex items-center gap-2 lg:text-2xl">
+          Reserva una cita
+          <svg
+            class="w-5 h-5 transition-transform group-hover:translate-x-1"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="5"
+              d="M9 5l7 7-7 7"></path>
           </svg>
         </span>
       </a>
-      
+
       <a
         href="#servicios"
-        class="group relative inline-block border-2 border-white text-white hover:bg-white hover:text-blue-950 font-bold px-8 py-3 rounded-lg transition-all duration-300"
+        class="group inline-block relative content-center hover:bg-white px-8 py-3 border-2 border-white rounded-lg font-semibold text-white hover:text-blue-950 lg:text-xl transition-all duration-300"
       >
         <span class="relative">Ver Servicios</span>
       </a>
     </div>
-
-    <div class="flex flex-wrap gap-3 lg:gap-6 mt-6 lg:mt-8 lg:w-1/2">
-      <div class="flex items-center gap-2">
-        <svg class="w-6 h-6 text-blue-300" fill="currentColor" viewBox="0 0 20 20">
-          <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
-        </svg>
-        <span class="text-sm">Tecnología de última generación</span>
-      </div>
-      <div class="flex items-center gap-2">
-        <svg class="w-6 h-6 text-blue-300" fill="currentColor" viewBox="0 0 20 20">
-          <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
-        </svg>
-        <span class="text-sm">Atención personalizada</span>
-      </div>
-      <div class="flex items-center gap-2">
-        <svg class="w-6 h-6 text-blue-300" fill="currentColor" viewBox="0 0 20 20">
-          <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
-        </svg>
-        <span class="text-sm">Excelencia en odontología</span>
-      </div>
-    </div>
   </div>
+
+  <a
+    href="#servicios"
+    aria-label="Desplazarse hacia la sección de servicios"
+    class="group bottom-6 left-1/2 z-10 absolute text-white/90 hover:text-white transition-transform -translate-x-1/2 hover:-translate-y-1 duration-300"
+  >
+    <svg
+      class="drop-shadow-lg size-20 animate-bounce"
+      viewBox="0 0 24 24"
+      fill="none"
+      aria-hidden="true"
+    >
+      <path
+        d="M8 7l4-4 4 4"
+        stroke="currentColor"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        opacity="0.35"></path>
+      <path
+        d="M8 12l4-4 4 4"
+        stroke="currentColor"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        opacity="0.7"></path>
+      <path
+        d="M8 17l4-4 4 4"
+        stroke="currentColor"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"></path>
+    </svg>
+  </a>
 </section>

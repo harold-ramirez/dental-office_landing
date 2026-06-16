@@ -1,52 +1,62 @@
 ---
-import Close from "@icons/Close.astro";
-import Menu from "@icons/Menu.astro";
-import { HeaderWhatsapp } from "@components/react/HeaderWhatsapp";
+import Close from '@icons/Close.astro';
+import Menu from '@icons/Menu.astro';
+import { HeaderWhatsapp } from '@components/react/HeaderWhatsapp';
 
 const labels = [
-  {label: "Inicio", id:"#inicio"},
-  {label: "Servicios", id:"#servicios"},
-  {label: "Acerca de", id:"#acerca"},
+  { label: 'Inicio', id: '#inicio' },
+  { label: 'Servicios', id: '#servicios' },
+  { label: 'Acerca de', id: '#acerca' },
   // {label: "Testimonios", id:"#testimonios"},
-  {label: "Ubicación", id:"#ubicacion"},
-]
+  { label: 'Ubicación', id: '#ubicacion' },
+];
 ---
 
-<header class="top-0 right-0 left-0 z-50 sticky px-4 lg:px-8 bg-linear-to-r from-blue-600 to-blue-700 shadow-lg py-3 h-auto text-white">
+<header
+  class="top-0 right-0 left-0 z-50 sticky px-4 lg:px-8 bg-linear-to-r from-blue-600 to-blue-700 shadow-lg py-3 h-auto text-white"
+>
   <input type="checkbox" id="menuToggle" class="peer hidden" />
-  
+
   <nav class="flex items-center justify-between w-full max-w-7xl mx-auto">
     <!-- Logo -->
-    <a href="#inicio" class="flex flex-row items-center gap-2 hover:opacity-80 transition-opacity">
+    <a
+      href="#inicio"
+      class="flex flex-row items-center gap-2 hover:opacity-80 transition-opacity"
+    >
       <img
         loading="lazy"
         src="/images/logo.webp"
         alt="Dr. Alexander Ojalvo - Odontología Especializada"
         class="rounded-full size-14 border-2 border-white shadow-md"
       />
-      <p class="hidden lg:block text-base font-bold leading-tight">
-        Odontología<br>Dr. Ojalvo
+      <p class="hidden lg:block text-xl font-bold leading-tight">
+        DEMO<br />Odontología Avanzada<br />Dr. Alexander Ojalvo
       </p>
     </a>
 
     <!-- Menu Toggle -->
-    <label for="menuToggle" class="lg:hidden flex justify-end cursor-pointer z-50">
+    <label
+      for="menuToggle"
+      class="lg:hidden flex justify-end cursor-pointer z-50"
+    >
       <Menu className="peer-checked:hidden w-8 h-8 text-white block" />
       <span class="hidden peer-checked:block">
-          <Close className="w-8 h-8 text-white" />
+        <Close className="w-8 h-8 text-white" />
       </span>
     </label>
 
     <!-- Navigation Menu Desktop -->
     <ul class="hidden lg:flex items-center justify-center gap-8">
-      {labels.map((item)=>(
-        <a
-          href={item.id} 
-          class="text-base font-medium hover:text-blue-100 transition-colors relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:bg-blue-200 after:w-0 hover:after:w-full after:transition-all after:duration-300"
-        >
-          {item.label}
-        </a>
-      ))}
+      {
+        labels.map((item) => (
+          <a
+            href={item.id}
+            class="text-xl font-medium hover:text-blue-100 transition-colors relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:bg-blue-200 after:w-0 hover:after:w-full after:transition-all after:duration-300"
+          >
+            {item.label}
+          </a>
+        ))
+      }
     </ul>
 
     <!-- Whatsapp Button -->
@@ -54,15 +64,19 @@ const labels = [
   </nav>
 
   <!-- Mobile Menu -->
-  <ul class="hidden peer-checked:flex absolute top-full left-0 right-0 flex-col bg-blue-700 shadow-lg animate-fade-in-down origin-top transition-all duration-300">
-    {labels.map((item)=>(
-      <a
-        href={item.id} 
-        class="mobile-link px-4 py-4 text-center font-medium hover:bg-blue-600 transition-colors border-b border-blue-600 last:border-b-0 text-lg"
-      >
-        {item.label}
-      </a>
-    ))}
+  <ul
+    class="hidden peer-checked:flex absolute top-full left-0 right-0 flex-col bg-blue-700 shadow-lg animate-fade-in-down origin-top transition-all duration-300"
+  >
+    {
+      labels.map((item) => (
+        <a
+          href={item.id}
+          class="mobile-link px-4 py-4 text-center font-medium hover:bg-blue-600 transition-colors border-b border-blue-600 last:border-b-0 text-lg"
+        >
+          {item.label}
+        </a>
+      ))
+    }
   </ul>
 </header>
 
@@ -71,7 +85,7 @@ const labels = [
   input#menuToggle:checked ~ ul {
     display: flex;
   }
-  
+
   /* Toggle Icon Logic handled by label sibling check? No, label doesn't see input state directly if input is outside. 
      Wait, I moved input outside. The Label is inside Nav. 
      The label 'for' attribute triggers the input. 
@@ -92,24 +106,26 @@ const labels = [
   // Mobile Menu Logic
   const menuToggle = document.getElementById('menuToggle') as HTMLInputElement;
   const mobileMenu = document.querySelector('header > ul'); // Select the UL that is direct child
-  const menuIcons = document.querySelectorAll('label[for="menuToggle"] > svg, label[for="menuToggle"] > span');
+  const menuIcons = document.querySelectorAll(
+    'label[for="menuToggle"] > svg, label[for="menuToggle"] > span'
+  );
   const mobileLinks = document.querySelectorAll('.mobile-link');
 
   // Sync icons
   const updateIcons = () => {
-     if(menuToggle.checked) {
-        menuIcons[0].classList.add('hidden'); // Menu Icon
-        menuIcons[1].classList.remove('hidden'); // Close Icon
-     } else {
-        menuIcons[0].classList.remove('hidden');
-        menuIcons[1].classList.add('hidden');
-     }
+    if (menuToggle.checked) {
+      menuIcons[0].classList.add('hidden'); // Menu Icon
+      menuIcons[1].classList.remove('hidden'); // Close Icon
+    } else {
+      menuIcons[0].classList.remove('hidden');
+      menuIcons[1].classList.add('hidden');
+    }
   };
 
   menuToggle?.addEventListener('change', updateIcons);
-  
+
   // Close menu when clicking link
-  mobileLinks.forEach(link => {
+  mobileLinks.forEach((link) => {
     link.addEventListener('click', () => {
       menuToggle.checked = false;
       updateIcons();
@@ -121,21 +137,22 @@ const labels = [
   let navLinks = document.querySelectorAll('header nav ul:nth-child(2) a'); // Desktop links
 
   window.onscroll = () => {
-    sections.forEach(sec => {
+    sections.forEach((sec) => {
       let top = window.scrollY;
       let offset = sec.offsetTop - 150;
       let height = sec.offsetHeight;
       let id = sec.getAttribute('id');
-      
-      if(top >= offset && top < offset + height) {
-        navLinks.forEach(links => {
+
+      if (top >= offset && top < offset + height) {
+        navLinks.forEach((links) => {
           // Remove active styles
-          links.classList.remove("after:w-full");
+          links.classList.remove('after:w-full');
           // Add active style to current
-          document.querySelector('header nav ul:nth-child(2) a[href*=' + id + ']')
-            ?.classList.add("after:w-full");
+          document
+            .querySelector('header nav ul:nth-child(2) a[href*=' + id + ']')
+            ?.classList.add('after:w-full');
         });
-      };
+      }
     });
   };
 </script>
